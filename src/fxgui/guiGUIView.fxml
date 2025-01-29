@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <DatePicker BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Label text="Label" />
+          <Button mnemonicParsing="false" text="Button" />
+            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="74.0" layoutY="12.0" mnemonicParsing="false" text="Button" />
+        </items>
+      </ToolBar>
+   </bottom>
+   <top>
+      <Label text="Daily Print" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <TextFlow prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
