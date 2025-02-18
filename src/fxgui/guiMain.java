@@ -15,7 +15,7 @@ public class guiMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader ldr = new FXMLLoader(getClass().getResource("ht/fxgui/guiGUIView.fxml"));
+            FXMLLoader ldr = new FXMLLoader(getClass().getResource("guiGUIView.fxml"));
             final Pane root = ldr.load();
             //final guiGUIController guiCtrl = (guiGUIController)ldr.getController();
             Scene scene = new Scene(root);

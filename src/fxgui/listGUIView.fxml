@@ -79,7 +79,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Back to list view" />
+            <Button mnemonicParsing="false" text="Back to start" />
             <Button mnemonicParsing="false" text="New" />
          </children>
       </HBox>
