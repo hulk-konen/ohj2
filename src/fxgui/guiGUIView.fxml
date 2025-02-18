@@ -5,7 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fxgui.guiGUIController">
    <left>
       <DatePicker BorderPane.alignment="TOP_LEFT" />
    </left>
@@ -16,13 +19,16 @@
          </font></Label>
    </top>
    <center>
-      <TextFlow prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"
+                text="Daily print 2025-10-10&#10;Todos:&#10;Demo 6 [x]&#10;Weather&#10;+6, sunny"
+                editable="false" wrapText="true">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding></TextFlow>
+         </padding>
+      </TextArea>
    </center>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -31,7 +37,7 @@
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Label text="Create / Edit" />
-          <Button mnemonicParsing="false" text="Go to list view" />
+            <Button fx:id="listGUIButton" mnemonicParsing="false" text="Go to list view" onAction="#openListGUI" />
          </children>
       </HBox>
    </bottom>

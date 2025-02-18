@@ -5,83 +5,77 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fxgui.listGUIController">
    <top>
       <Label text="All entries" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Label>
    </top>
-   <center>
-      <GridPane alignment="CENTER" gridLinesVisible="true" prefHeight="50.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
-               <children>
-                  <Label text="20.1.2025" />
-                  <Button mnemonicParsing="false" text="Edit" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Label text="27.1.2025" />
-                  <Button mnemonicParsing="false" text="Edit" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="2">
-               <children>
-                  <Label text="1.1.2025" />
-                  <Button mnemonicParsing="false" text="Edit" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="3">
-               <children>
-                  <Label text="30.11.2024" />
-                  <Button mnemonicParsing="false" text="Edit" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="4">
-               <children>
-                  <Label text="1.1.2024" />
-                  <Button mnemonicParsing="false" text="Edit" />
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </BorderPane.margin>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </GridPane>
-   </center>
-   <right>
-      <Button mnemonicParsing="false" text="Newer" BorderPane.alignment="CENTER" />
-   </right>
-   <left>
-      <Button mnemonicParsing="false" text="Older" BorderPane.alignment="CENTER" />
-   </left>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Back to start" />
-            <Button mnemonicParsing="false" text="New" />
+             <Button fx:id="backGUIButton" mnemonicParsing="false" text="Back to start" onAction="#handleBackGUI" />
+             <Button fx:id="newEntryButton" mnemonicParsing="false" text="New" onAction="#handleNewEntry" />
          </children>
       </HBox>
    </bottom>
+   <center>
+       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <content>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                   <children>
+                       <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-17" />
+                                       <Button fx:id="button20250117" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-18" />
+                                       <Button fx:id="button20250118" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-19" />
+                                       <Button fx:id="button20250119" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-20" />
+                                       <Button fx:id="button20250120" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-21" />
+                                       <Button fx:id="button20250121" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-22" />
+                                       <Button fx:id="button20250122" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                   <children>
+                                       <Label text="2025-01-23" />
+                                       <Button fx:id="button20250123" mnemonicParsing="false" text="Edit" onAction="#handleEditEntry" />                                   </children>
+                               </HBox>
+                           </children>
+                           <padding>
+                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                       </VBox>
+                   </children>
+               </AnchorPane>
+           </content>
+       </ScrollPane>
+   </center>
 </BorderPane>

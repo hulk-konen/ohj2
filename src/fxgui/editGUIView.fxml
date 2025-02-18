@@ -5,7 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fxgui.editGUIController">
    <top>
       <Label text="Edit" BorderPane.alignment="CENTER">
          <font>
@@ -32,15 +35,15 @@
             <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DatePicker GridPane.columnIndex="1" />
-            <Label text="Date" />
+             <DatePicker fx:id="datePicker" GridPane.columnIndex="1" onAction="#handleDateSelection" />
+             <Label text="Date" />
          </children>
       </GridPane>
    </center>
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Back" />
+            <Button fx:id="backGUIButton" mnemonicParsing="false" text="Go to list view" onAction="#handleBackGUI" />
             <Button mnemonicParsing="false" text="Submit" />
          </children>
       </HBox>

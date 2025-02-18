@@ -6,10 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 
-
 /**
  * @author tommi
- * @version 1/28/25
+ * @version tyo3
  */
 public class guiMain extends Application {
     @Override
@@ -21,7 +20,7 @@ public class guiMain extends Application {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("gui.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("gui");
+            primaryStage.setTitle("Daily Print");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
