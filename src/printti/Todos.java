@@ -1,17 +1,24 @@
 package printti;
 
+/**
+ * Printin todot, osaa mm. lisätä uuden todon
+ *
+ * @author tohulkko
+ * @version 1.0, 11.04.2025
+ */
+
 import java.util.*;
 
-public class Todos {
+public class Todos implements Iterable<Todo>{
 
     private String                      tiedostonNimi = "";
 
-    /** Taulukko harrastuksista */
+    /** Taulukko todoista */
     private final Collection<Todo> alkiot        = new ArrayList<Todo>();
 
 
     /**
-     * Harrastusten alustaminen
+     * Todon alustaminen
      */
     public Todos() {
         // toistaiseksi ei tarvitse tehdä mitään
@@ -19,8 +26,8 @@ public class Todos {
 
 
     /**
-     * Lisää uuden harrastuksen tietorakenteeseen.  Ottaa harrastuksen omistukseensa.
-     * @param task lisättävä harrastus.  Huom tietorakenne muuttuu omistajaksi
+     * Lisää uuden todon tietorakenteeseen.  Ottaa todon omistukseensa.
+     * @param task lisättävä todo.  Huom tietorakenne muuttuu omistajaksi
      */
     public void lisaa(Todo task) {
         alkiot.add(task);
@@ -28,7 +35,7 @@ public class Todos {
 
 
     /**
-     * Lukee jäsenistön tiedostosta.
+     * Lukee todot tiedostosta.
      * TODO Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
@@ -40,7 +47,7 @@ public class Todos {
 
 
     /**
-     * Tallentaa jäsenistön tiedostoon.
+     * Tallentaa todot tiedostoon.
      * TODO Kesken.
      * @throws SailoException jos talletus epäonnistuu
      */
@@ -50,8 +57,8 @@ public class Todos {
 
 
     /**
-     * Palauttaa kerhon harrastusten lukumäärän
-     * @return harrastusten lukumäärä
+     * Palauttaa printin todoitten lukumäärän
+     * @return todoitten lukumäärä
      */
     public int getLkm() {
         return alkiot.size();
@@ -59,37 +66,38 @@ public class Todos {
 
 
     /**
-     * Iteraattori kaikkien harrastusten läpikäymiseen
-     * @return harrastusiteraattori
+     * Iteraattori kaikkien todoitten läpikäymiseen
+     * @return todo -iteraattori
      *
-     * @example
+     * @exampleitera
      * <pre name="test">
      * #PACKAGEIMPORT
      * #import java.util.*;
      *
-     *  Harrastukset harrasteet = new Harrastukset();
-     *  Harrastus pitsi21 = new Harrastus(2); harrasteet.lisaa(pitsi21);
-     *  Harrastus pitsi11 = new Harrastus(1); harrasteet.lisaa(pitsi11);
-     *  Harrastus pitsi22 = new Harrastus(2); harrasteet.lisaa(pitsi22);
-     *  Harrastus pitsi12 = new Harrastus(1); harrasteet.lisaa(pitsi12);
-     *  Harrastus pitsi23 = new Harrastus(2); harrasteet.lisaa(pitsi23);
+     *  Todos todot = new Todos();
+     *  Todo todo21 = new Todo(2); todot.lisaa(todo21);
+     *  Todo todo11 = new Todo(1); todot.lisaa(todo11);
+     *  Todo todo22 = new Todo(2); todot.lisaa(todo22);
+     *  Todo todo12 = new Todo(1); todot.lisaa(todo12);
+     *  Todo todo23 = new Todo(2); todot.lisaa(todo23);
      *
-     *  Iterator<Harrastus> i2=harrasteet.iterator();
-     *  i2.next() === pitsi21;
-     *  i2.next() === pitsi11;
-     *  i2.next() === pitsi22;
-     *  i2.next() === pitsi12;
-     *  i2.next() === pitsi23;
-     *  i2.next() === pitsi12;  #THROWS NoSuchElementException
+     *  Iterator<Todo> i2=todot.iterator();
+     *  i2.next() === todo21;
+     *  i2.next() === todo11;
+     *  i2.next() === todo22;
+     *  i2.next() === todo12;
+     *  i2.next() === todo23;
+     *  i2.next() === todo12;  #THROWS NoSuchElementException
      *
      *  int n = 0;
-     *  int jnrot[] = {2,1,2,1,2};
+     *  int ids[] = {2,1,2,1,2};
      *
-     *  for ( Harrastus har:harrasteet ) {
-     *    har.getJasenNro() === jnrot[n]; n++;
-     *  }
-     *
-     *  n === 5;
+     * for (Todo task:todot) {
+     * task.getId() === ids[n];
+     * n++;
+    }
+     * assert n == ids.length : "Käsittelemättmiä todo, tarkasta";
+     * n === 5;
      *
      * </pre>
      */
@@ -100,37 +108,55 @@ public class Todos {
 
 
     /**
-     * Haetaan kaikki jäsen harrastukset
-     * @param tunnusnro jäsenen tunnusnumero jolle harrastuksia haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin harrastuksiin
+     * Haetaan kaikki päivän todot
+     * @param date päivän id jolle todoita haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin todoihin
      * @example
      * <pre name="test">
      * #import java.util.*;
      *
-     *  Harrastukset harrasteet = new Harrastukset();
-     *  Harrastus pitsi21 = new Harrastus(2); harrasteet.lisaa(pitsi21);
-     *  Harrastus pitsi11 = new Harrastus(1); harrasteet.lisaa(pitsi11);
-     *  Harrastus pitsi22 = new Harrastus(2); harrasteet.lisaa(pitsi22);
-     *  Harrastus pitsi12 = new Harrastus(1); harrasteet.lisaa(pitsi12);
-     *  Harrastus pitsi23 = new Harrastus(2); harrasteet.lisaa(pitsi23);
-     *  Harrastus pitsi51 = new Harrastus(5); harrasteet.lisaa(pitsi51);
+     *  Todos todot = new Todos();
+     *  Todo pitsi21 = new Todo(2); todot.lisaa(pitsi21);
+     *  Todo pitsi11 = new Todo(1); todot.lisaa(pitsi11);
+     *  Todo pitsi22 = new Todo(2); todot.lisaa(pitsi22);
+     *  Todo pitsi12 = new Todo(1); todot.lisaa(pitsi12);
+     *  Todo pitsi23 = new Todo(2); todot.lisaa(pitsi23);
+     *  Todo pitsi51 = new Todo(5); todot.lisaa(pitsi51);
      *
-     *  List<Harrastus> loytyneet;
-     *  loytyneet = harrasteet.annaHarrastukset(3);
+     *  List<Todo> loytyneet;
+     *  loytyneet = todot.annaTodot(3);
      *  loytyneet.size() === 0;
-     *  loytyneet = harrasteet.annaHarrastukset(1);
+     *  loytyneet = todot.annaTodot(1);
      *  loytyneet.size() === 2;
      *  loytyneet.get(0) == pitsi11 === true;
      *  loytyneet.get(1) == pitsi12 === true;
-     *  loytyneet = harrasteet.annaHarrastukset(5);
+     *  loytyneet = todot.annaTodot(5);
      *  loytyneet.size() === 1;
      *  loytyneet.get(0) == pitsi51 === true;
      * </pre>
      */
+//    public List<Todo> annaTodot(int date) {
+//        List<Todo> loydetyt = new ArrayList<Todo>();
+//        for (Todo task : alkiot)
+//            if (task.getPvm() == date) loydetyt.add(task);
+//        return loydetyt;
+//    }
+
+    // Add this to your code temporarily
     public List<Todo> annaTodot(int date) {
         List<Todo> loydetyt = new ArrayList<Todo>();
-        for (Todo task : alkiot)
-            if (task.getDate() == date) loydetyt.add(task);
+        System.out.println("Looking for date: " + date);
+        System.out.println("Collection size: " + alkiot.size());
+
+        for (Todo task : alkiot) {
+            System.out.println("Todo date: " + task.getDate() + ", id: " + task.getId());
+            if (task.getDate() == date) {
+                System.out.println("Match found!");
+                loydetyt.add(task);
+            }
+        }
+
+        System.out.println("Found " + loydetyt.size() + " matches");
         return loydetyt;
     }
 
@@ -160,9 +186,9 @@ public class Todos {
         harrasteet.lisaa(pitsi2);
         harrasteet.lisaa(pitsi4);
 
-        System.out.println("============= Harrastukset testi =================");
+        System.out.println("============= Todot testi =================");
 
-        List<Todo> harrastukset2 = harrasteet.annaTodot(2);
+        List<Todo> harrastukset2 = harrasteet.annaTodot(1);
 
         for (Todo har : harrastukset2) {
             System.out.print(har.getDate() + " ");

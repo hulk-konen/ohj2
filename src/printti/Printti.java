@@ -26,9 +26,9 @@ public class Printti {
 
 
     /**
-     * Poistaa jäsenistöstä ja harrasteista ne joilla on nro. Kesken.
+     * Poistaa dates ja todos ne joilla on nro. Kesken.
      * @param nro viitenumero, jonka mukaan poistetaan
-     * @return montako jäsentä poistettiin
+     * @return montako datea poistettiin
      */
     public int poista(@SuppressWarnings("unused") int nro) {
         return 0;
@@ -38,25 +38,24 @@ public class Printti {
     /**
      * <pre name="test">
      * #THROWS SailoException
-     * Kerho kerho = new Kerho();
-     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
-     * aku1.rekisteroi(); aku2.rekisteroi();
-     * kerho.getJasenia() === 0;
-     * kerho.lisaa(aku1); kerho.getJasenia() === 1;
-     * kerho.lisaa(aku2); kerho.getJasenia() === 2;
-     * kerho.lisaa(aku1); kerho.getJasenia() === 3;
-     * kerho.getJasenia() === 3;
-     * kerho.annaJasen(0) === aku1;
-     * kerho.annaJasen(1) === aku2;
-     * kerho.annaJasen(2) === aku1;
-     * kerho.annaJasen(3) === aku1; #THROWS IndexOutOfBoundsException
-     * kerho.lisaa(aku1); kerho.getJasenia() === 4;
-     * kerho.lisaa(aku1); kerho.getJasenia() === 5;
-     * kerho.lisaa(aku1);            #THROWS SailoException
+     * Printti printti = new Printti();
+     * Pvm aku1 = new Pvm(), aku2 = new Pvm();
+     * printti.getDates() === 0;
+     * printti.lisaa(aku1); printti.getDates() === 1;
+     * printti.lisaa(aku2); printti.getDates() === 2;
+     * printti.lisaa(aku1); printti.getDates() === 3;
+     * printti.getDates() === 3;
+     * printti.annaDate(0) === aku1;
+     * printti.annaDate(1) === aku2;
+     * printti.annaDate(2) === aku1;
+     * printti.annaDate(3) === aku1; #THROWS IndexOutOfBoundsException
+     * printti.lisaa(aku1); printti.getDates() === 4;
+     * printti.lisaa(aku1); printti.getDates() === 5;
+     * printti.lisaa(aku1);            #THROWS SailoException
      * </pre>
      */
-    public void lisaa(Date date) throws SailoException {
-        dates.lisaa(date);
+    public void lisaa(Pvm pvm) throws SailoException {
+        dates.lisaa(pvm);
     }
 
     public void lisaa(Todo todo) throws SailoException {
@@ -72,7 +71,7 @@ public class Printti {
      * @return viite i:teen jäseneen
      * @throws IndexOutOfBoundsException jos i väärin
      */
-    public Date annaDate(int i) throws IndexOutOfBoundsException {
+    public Pvm annaDate(int i) throws IndexOutOfBoundsException {
         return dates.anna(i);
     }
 
@@ -80,44 +79,44 @@ public class Printti {
     /**
      * Haetaan kaikki jäsen harrastukset
      * <pre name="test">
+     * #THROWS SailoException
      * #import java.util.*;
      *
-     *  Kerho kerho = new Kerho();
-     *  Jasen aku1 = new Jasen(), aku2 = new Jasen(), aku3 = new Jasen();
-     *  aku1.rekisteroi(); aku2.rekisteroi(); aku3.rekisteroi();
+     *  Printti printti = new Printti();
+     *  Pvm aku1 = new Pvm(), aku2 = new Pvm(), aku3 = new Pvm();
      *  int id1 = aku1.getId();
      *  int id2 = aku2.getId();
-     *  Harrastus pitsi11 = new Harrastus(id1); kerho.lisaa(pitsi11);
-     *  Harrastus pitsi12 = new Harrastus(id1); kerho.lisaa(pitsi12);
-     *  Harrastus pitsi21 = new Harrastus(id2); kerho.lisaa(pitsi21);
-     *  Harrastus pitsi22 = new Harrastus(id2); kerho.lisaa(pitsi22);
-     *  Harrastus pitsi23 = new Harrastus(id2); kerho.lisaa(pitsi23);
+     *  Todo pitsi11 = new Todo(id1); printti.lisaa(pitsi11);
+     *  Todo pitsi12 = new Todo(id1); printti.lisaa(pitsi12);
+     *  Todo pitsi21 = new Todo(id2); printti.lisaa(pitsi21);
+     *  Todo pitsi22 = new Todo(id2); printti.lisaa(pitsi22);
+     *  Todo pitsi23 = new Todo(id2); printti.lisaa(pitsi23);
      *
-     *  List<Harrastus> loytyneet;
-     *  loytyneet = kerho.annaHarrastukset(aku3);
+     *  List<Todo> loytyneet;
+     *  loytyneet = printti.annaTodot(aku3);
      *  loytyneet.size() === 0;
-     *  loytyneet = kerho.annaHarrastukset(aku1);
+     *  loytyneet = printti.annaTodot(aku1);
      *  loytyneet.size() === 2;
      *  loytyneet.get(0) == pitsi11 === true;
      *  loytyneet.get(1) == pitsi12 === true;
-     *  loytyneet = kerho.annaHarrastukset(aku2);
+     *  loytyneet = printti.annaTodot(aku2);
      *  loytyneet.size() === 3;
      *  loytyneet.get(0) == pitsi21 === true;
      * </pre>
      */
-    public List<Todo> annaTodot(Date date) {
-        return todos.annaTodot(date.getId());
+    public List<Todo> annaTodot(Pvm pvm) {
+        return todos.annaTodot(pvm.getId());
     }
 
 
     /**
      * Lukee kerhon tiedot tiedostosta
-     * @param date jota käyteään lukemisessa
+     * @param pvm jota käyteään lukemisessa
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String date) throws SailoException {
-        dates.lueTiedostosta(date);
-        todos.lueTiedostosta(date);
+    public void lueTiedostosta(String pvm) throws SailoException {
+        dates.lueTiedostosta(pvm);
+        todos.lueTiedostosta(pvm);
     }
 
 
@@ -141,7 +140,7 @@ public class Printti {
         try {
             // kerho.lueTiedostosta("kelmit");
 
-            Date pvm1 = new Date(), pvm2 = new Date();
+            Pvm pvm1 = new Pvm(), pvm2 = new Pvm();
             pvm1.luo();
             pvm1.vastaaPvm();
             pvm2.luo();
@@ -159,10 +158,10 @@ public class Printti {
             System.out.println("============= Kerhon testi =================");
 
             for (int i = 0; i < printti.getDates(); i++) {
-                Date date = printti.annaDate(i);
+                Pvm pvm = printti.annaDate(i);
                 System.out.println("Pvm paikassa: " + i);
-                date.tulosta(System.out);
-                List<Todo> loytyneet = printti.annaTodot(date);
+                pvm.tulosta(System.out);
+                List<Todo> loytyneet = printti.annaTodot(pvm);
                 for (Todo todo : loytyneet)
                     todo.tulosta(System.out);
             }

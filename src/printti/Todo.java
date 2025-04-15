@@ -3,10 +3,10 @@ import java.io.*;
 import java.util.Random;
 
 /**
- * Harrastus joka osaa mm. itse huolehtia tunnus_nro:staan.
+ * Todo joka osaa mm. itse huolehtia id:staan.
  *
- * @author Vesa Lappalainen
- * @version 1.0, 22.02.2003
+ * @author tohulkko
+ * @version 1.0, 11.04.2025
  */
 public class Todo {
     private int id;
@@ -17,16 +17,17 @@ public class Todo {
 
 
     /**
-     * Alustetaan harrastus.  Toistaiseksi ei tarvitse tehdä mitään
+     * Alustetaan todo.  Toistaiseksi ei tarvitse tehdä mitään
      */
     public Todo() {
+        rekisteroi();
         // Vielä ei tarvita mitään
     }
 
 
     /**
-     * Alustetaan tietyn jäsenen harrastus.
-     * @param jasenNro jäsenen viitenumero
+     * Alustetaan tietyn päivän todo.
+     * @param date päivän numero
      */
     public Todo(int date) {
         this.date = date;
@@ -34,10 +35,9 @@ public class Todo {
 
 
     /**
-     * Apumetodi, jolla saadaan täytettyä testiarvot Harrastukselle.
-     * Aloitusvuosi arvotaan, jotta kahdella harrastuksella ei olisi
-     * samoja tietoja.
-     * @param nro viite henkilöön, jonka harrastuksesta on kyse
+     * Apumetodi, jolla saadaan täytettyä testiarvot Todolle.
+     * Status arvotaan, testaamista varten.
+     * @param nro viite päivään, jonka todosta on kyse
      */
     public void vastaaPitsinNyplays(int nro) {
         date = nro;
@@ -48,7 +48,7 @@ public class Todo {
 
 
     /**
-     * Tulostetaan harrastuksen tiedot
+     * Tulostetaan todon tiedot
      * @param out tietovirta johon tulostetaan
      */
     public void tulosta(PrintStream out) {
@@ -57,7 +57,7 @@ public class Todo {
 
 
     /**
-     * Tulostetaan henkilön tiedot
+     * Tulostetaan todon tiedot
      * @param os tietovirta johon tulostetaan
      */
     public void tulosta(OutputStream os) {
@@ -66,17 +66,17 @@ public class Todo {
 
 
     /**
-     * Antaa harrastukselle seuraavan rekisterinumeron.
-     * @return harrastuksen uusi tunnus_nro
+     * Antaa harrastukselle seuraavan id:n.
+     * @return harrastuksen uusi id
      * @example
      * <pre name="test">
-     *   Todo pitsi1 = new Todo();
-     *   pitsi1.getId() === 0;
-     *   pitsi1.rekisteroi();
-     *   Todo pitsi2 = new Todo();
-     *   pitsi2.rekisteroi();
-     *   int n1 = pitsi1.getId();
-     *   int n2 = pitsi2.getId();
+     *   Todo todo1 = new Todo();
+     *   todo1.getId() === 0;
+     *   todo1.rekisteroi();
+     *   Todo todo2 = new Todo();
+     *   todo2.rekisteroi();
+     *   int n1 = todo1.getId();
+     *   int n2 = todo2.getId();
      *   n1 === n2-1;
      * </pre>
      */
@@ -88,8 +88,8 @@ public class Todo {
 
 
     /**
-     * Palautetaan harrastuksen oma id
-     * @return harrastuksen id
+     * Palautetaan todon oma id
+     * @return todon id
      */
     public int getId() {
         return id;
@@ -97,8 +97,8 @@ public class Todo {
 
 
     /**
-     * Palautetaan mille jäsenelle harrastus kuuluu
-     * @return jäsenen id
+     * Palautetaan mille datelle harrastus kuuluu
+     * @return päivän id
      */
     public int getDate() {
         return date;
@@ -106,7 +106,7 @@ public class Todo {
 
 
     /**
-     * Testiohjelma Harrastukselle.
+     * Testiohjelma Todolle.
      * @param args ei käytössä
      */
     public static void main(String[] args) {

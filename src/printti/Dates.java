@@ -1,17 +1,16 @@
 package printti;
 
 /**
- * Kerhon jäsenistö joka osaa mm. lisätä uuden jäsenen
+ * Printin päiväykset, osaa mm. lisätä uuden päivän
  *
- * @author Vesa Lappalainen
- * @version 1.0, 22.02.2003
- * @version 1.1, 19.02.2012
+ * @author tohulkko
+ * @version 1.0, 11.04.2025
  */
 public class Dates {
     private static final int MAX_JASENIA   = 5;
     private int              lkm           = 0;
     private String           tiedostonNimi = "";
-    private Date            alkiot[]      = new Date[MAX_JASENIA];
+    private Pvm             alkiot[]      = new Pvm[MAX_JASENIA];
 
 
     /**
@@ -23,32 +22,32 @@ public class Dates {
 
 
     /**
-     * Lisää uuden jäsenen tietorakenteeseen.  Ottaa jäsenen omistukseensa.
-     * @param date lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * Lisää uuden päivän tietorakenteeseen.  Ottaa päivän omistukseensa.
+     * @param pvm uuden päivän viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      * @example
      * <pre name="test">
      * #THROWS SailoException
-     * Jasenet jasenet = new Jasenet();
-     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
-     * jasenet.getLkm() === 0;
-     * jasenet.lisaa(aku1); jasenet.getLkm() === 1;
-     * jasenet.lisaa(aku2); jasenet.getLkm() === 2;
-     * jasenet.lisaa(aku1); jasenet.getLkm() === 3;
-     * jasenet.anna(0) === aku1;
-     * jasenet.anna(1) === aku2;
-     * jasenet.anna(2) === aku1;
-     * jasenet.anna(1) == aku1 === false;
-     * jasenet.anna(1) == aku2 === true;
-     * jasenet.anna(3) === aku1; #THROWS IndexOutOfBoundsException
-     * jasenet.lisaa(aku1); jasenet.getLkm() === 4;
-     * jasenet.lisaa(aku1); jasenet.getLkm() === 5;
-     * jasenet.lisaa(aku1);  #THROWS SailoException
+     * Dates dates = new Dates();
+     * Pvm pvm1 = new Pvm(), pvm2 = new Pvm();
+     * dates.getLkm() === 0;
+     * dates.lisaa(pvm1); dates.getLkm() === 1;
+     * dates.lisaa(pvm2); dates.getLkm() === 2;
+     * dates.lisaa(pvm1); dates.getLkm() === 3;
+     * dates.anna(0) === pvm1;
+     * dates.anna(1) === pvm2;
+     * dates.anna(2) === pvm1;
+     * dates.anna(1) == pvm1 === false;
+     * dates.anna(1) == pvm2 === true;
+     * dates.anna(3) === pvm1; #THROWS IndexOutOfBoundsException
+     * dates.lisaa(pvm1); dates.getLkm() === 4;
+     * dates.lisaa(pvm1); dates.getLkm() === 5;
+     * dates.lisaa(pvm1); #THROWS SailoException
      * </pre>
      */
-    public void lisaa(Date date) throws SailoException {
+    public void lisaa(Pvm pvm) throws SailoException {
         if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
-        alkiot[lkm] = date;
+        alkiot[lkm] = pvm;
         lkm++;
     }
 
@@ -59,7 +58,7 @@ public class Dates {
      * @return viite jäseneen, jonka indeksi on i
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella
      */
-    public Date anna(int i) throws IndexOutOfBoundsException {
+    public Pvm anna(int i) throws IndexOutOfBoundsException {
         if (i < 0 || lkm <= i)
             throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
         return alkiot[i];
@@ -67,7 +66,7 @@ public class Dates {
 
 
     /**
-     * Lukee jäsenistön tiedostosta.  Kesken.
+     * Lukee päivät tiedostosta.  Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
      */
@@ -78,7 +77,7 @@ public class Dates {
 
 
     /**
-     * Tallentaa jäsenistön tiedostoon.  Kesken.
+     * Tallentaa päivät tiedostoon.  Kesken.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
@@ -87,8 +86,8 @@ public class Dates {
 
 
     /**
-     * Palauttaa kerhon jäsenten lukumäärän
-     * @return jäsenten lukumäärä
+     * Palauttaa printin päivien lukumäärän
+     * @return päivien lukumäärä
      */
     public int getLkm() {
         return lkm;
@@ -96,13 +95,13 @@ public class Dates {
 
 
     /**
-     * Testiohjelma jäsenistölle
+     * Testiohjelma päiville
      * @param args ei käytössä
      */
     public static void main(String args[]) {
         Dates paivat = new Dates();
 
-        Date pv1 = new Date(), pv2 = new Date();
+        Pvm pv1 = new Pvm(), pv2 = new Pvm();
         pv1.luo();
         pv1.vastaaPvm();
         pv2.luo();
@@ -115,7 +114,7 @@ public class Dates {
             System.out.println("============= Päivät testi =================");
 
             for (int i = 0; i < paivat.getLkm(); i++) {
-                Date date = paivat.anna(i);
+                Pvm date = paivat.anna(i);
                 System.out.println("Jäsen nro: " + i);
                 date.tulosta(System.out);
             }

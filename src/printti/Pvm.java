@@ -1,20 +1,26 @@
 package printti;
 
+/**
+ * yksittäinen päiväys
+ *
+ * @author tohulkko
+ * @version 1.0, 11.04.2025
+ */
 import java.io.*;
 import java.util.Random;
 import java.time.LocalDate;
 
 
-public class Date {
+public class Pvm {
     private int        id;
-    private String     date = "";
+    private String     pvm = "";
     private static int seuraavaNro    = 1;
     private int        tunnusNro;
     private static final Random random = new Random();
 
 
-    public String getDate() {
-        return date;
+    public String getPvm() {
+        return pvm;
     }
 
 
@@ -23,7 +29,7 @@ public class Date {
      * @param apupvm pvm joka annetaan päivälle
      */
     public void vastaaPvm(String apupvm) {
-        date = apupvm;
+        pvm = apupvm;
     }
 
     /**
@@ -51,7 +57,7 @@ public class Date {
      */
     public void tulosta(PrintStream out) {
         out.println(String.format("%03d", id, 3) + "  "
-                + date);
+                + pvm);
     }
 
 
@@ -65,14 +71,14 @@ public class Date {
 
 
     /**
-     * Antaa jäsenelle seuraavan rekisterinumeron.
-     * @return jäsenen uusi tunnusNro
+     * Antaa päiville seuraavan rekisterinumeron.
+     * @return päivän uusi id
      * @example
      * <pre name="test">
-     *   Date pv1 = new Date();
+     *   Pvm pv1 = new Pvm();
      *   pv1.getId() === 0;
      *   pv1.luo();
-     *   Date pv2 = new Date();
+     *   Pvm pv2 = new Pvm();
      *   pv2.luo();
      *   int n1 = pv1.getId();
      *   int n2 = pv2.getId();
@@ -94,7 +100,7 @@ public class Date {
     }
 
     public static void main(String args[]) {
-        Date pv1 = new Date(), pv2 = new Date();
+        Pvm pv1 = new Pvm(), pv2 = new Pvm();
         pv1.luo();
         pv2.luo();
         pv1.tulosta(System.out);

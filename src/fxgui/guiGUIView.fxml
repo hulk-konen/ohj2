@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="fxgui.guiGUIController">
    <left>
-      <DatePicker BorderPane.alignment="TOP_LEFT" />
+      <DatePicker fx:id="datePicker" BorderPane.alignment="TOP_LEFT" onAction="#handleDateChange"/>
    </left>
    <top>
       <Label text="Daily Print" BorderPane.alignment="CENTER">
@@ -19,8 +19,7 @@
          </font></Label>
    </top>
    <center>
-      <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"
-                text="Daily print 2025-10-10&#10;Todos:&#10;Demo 6 [x]&#10;Weather&#10;+6, sunny"
+      <TextArea fx:id="textAreaPrintti" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"
                 editable="false" wrapText="true">
          <BorderPane.margin>
             <Insets />
