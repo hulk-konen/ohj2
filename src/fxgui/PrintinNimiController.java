@@ -7,10 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Kystään kerhon nimi ja luodaan tätä varten dialogi.
+ * Kystään printin nimi ja luodaan tätä varten dialogi.
  *
- * @author vesal
- * @version 2.1.2016
+ * @author tohulkko
+ * @version 15.4.2025
  */
 public class PrintinNimiController implements ModalControllerInterface<String> {
 
@@ -58,7 +58,7 @@ public class PrintinNimiController implements ModalControllerInterface<String> {
      */
     public static String kysyNimi(Stage modalityStage, String oletus) {
         return ModalController.showModal(
-                PrintinNimiController.class.getResource("KerhonNimiView.fxml"),
+                PrintinNimiController.class.getResource("PrintinNimiView.fxml"),
                 "Printti",
                 modalityStage, oletus);
     }

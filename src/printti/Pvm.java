@@ -91,6 +91,10 @@ public class Pvm {
         return id;
     }
 
+    public void setPvm(String pvm) {
+        this.pvm = pvm;
+    }
+
     /**
      * Palauttaa pvm:n id:n.
      * @return pvm id

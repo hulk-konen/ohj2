@@ -2,7 +2,7 @@ package printti;
 import java.util.List;
 
 /**
- * Kerho-luokka, joka huolehtii jäsenistöstä.  Pääosin kaikki metodit
+ * printti-luokka, joka huolehtii jäsenistöstä.  Pääosin kaikki metodit
  * ovat vain "välittäjämetodeja" jäsenistöön.
  *
  * @author Vesa Lappalainen
@@ -17,7 +17,7 @@ public class Printti {
     private final Todos todos = new Todos();
 
     /**
-     * Palautaa kerhon jäsenmäärän
+     * Palautaa printin pvm määrän
      * @return jäsenmäärä
      */
     public int getDates() {
@@ -45,10 +45,10 @@ public class Printti {
      * printti.lisaa(aku2); printti.getDates() === 2;
      * printti.lisaa(aku1); printti.getDates() === 3;
      * printti.getDates() === 3;
-     * printti.annaDate(0) === aku1;
-     * printti.annaDate(1) === aku2;
-     * printti.annaDate(2) === aku1;
-     * printti.annaDate(3) === aku1; #THROWS IndexOutOfBoundsException
+     * printti.annaPvm(0) === aku1;
+     * printti.annaPvm(1) === aku2;
+     * printti.annaPvm(2) === aku1;
+     * printti.annaPvm(3) === aku1; #THROWS IndexOutOfBoundsException
      * printti.lisaa(aku1); printti.getDates() === 4;
      * printti.lisaa(aku1); printti.getDates() === 5;
      * printti.lisaa(aku1);            #THROWS SailoException
@@ -71,7 +71,7 @@ public class Printti {
      * @return viite i:teen jäseneen
      * @throws IndexOutOfBoundsException jos i väärin
      */
-    public Pvm annaDate(int i) throws IndexOutOfBoundsException {
+    public Pvm annaPvm(int i) throws IndexOutOfBoundsException {
         return dates.anna(i);
     }
 
@@ -158,7 +158,7 @@ public class Printti {
             System.out.println("============= Kerhon testi =================");
 
             for (int i = 0; i < printti.getDates(); i++) {
-                Pvm pvm = printti.annaDate(i);
+                Pvm pvm = printti.annaPvm(i);
                 System.out.println("Pvm paikassa: " + i);
                 pvm.tulosta(System.out);
                 List<Todo> loytyneet = printti.annaTodot(pvm);

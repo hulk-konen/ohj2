@@ -41,7 +41,7 @@ public class Todos implements Iterable<Todo>{
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + ".task";
+        tiedostonNimi = hakemisto + "todot.dat";
         throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
     }
 
@@ -142,21 +142,14 @@ public class Todos implements Iterable<Todo>{
 //        return loydetyt;
 //    }
 
-    // Add this to your code temporarily
     public List<Todo> annaTodot(int date) {
         List<Todo> loydetyt = new ArrayList<Todo>();
-        System.out.println("Looking for date: " + date);
-        System.out.println("Collection size: " + alkiot.size());
 
         for (Todo task : alkiot) {
-            System.out.println("Todo date: " + task.getDate() + ", id: " + task.getId());
             if (task.getDate() == date) {
-                System.out.println("Match found!");
                 loydetyt.add(task);
             }
         }
-
-        System.out.println("Found " + loydetyt.size() + " matches");
         return loydetyt;
     }
 
