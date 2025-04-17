@@ -93,7 +93,7 @@ public class Todos implements Iterable<Todo>{
      *  int ids[] = {2,1,2,1,2};
      *
      * for (Todo task:todot) {
-     * task.getId() === ids[n];
+     * task.getDate() === ids[n];
      * n++;
     }
      * assert n == ids.length : "Käsittelemättmiä todo, tarkasta";
@@ -146,6 +146,7 @@ public class Todos implements Iterable<Todo>{
         List<Todo> loydetyt = new ArrayList<Todo>();
 
         for (Todo task : alkiot) {
+            System.out.println("Task Date: " + task.getDate() + ", Searching for Date: " + date);
             if (task.getDate() == date) {
                 loydetyt.add(task);
             }
@@ -181,7 +182,7 @@ public class Todos implements Iterable<Todo>{
 
         System.out.println("============= Todot testi =================");
 
-        List<Todo> harrastukset2 = harrasteet.annaTodot(1);
+        List<Todo> harrastukset2 = harrasteet.annaTodot(2);
 
         for (Todo har : harrastukset2) {
             System.out.print(har.getDate() + " ");

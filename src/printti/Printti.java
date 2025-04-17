@@ -83,9 +83,9 @@ public class Printti {
      * #import java.util.*;
      *
      *  Printti printti = new Printti();
-     *  Pvm aku1 = new Pvm(), aku2 = new Pvm(), aku3 = new Pvm();
-     *  int id1 = aku1.getId();
-     *  int id2 = aku2.getId();
+     *  Pvm pv1 = new Pvm(), pv2 = new Pvm(), pv3 = new Pvm();
+     *  int id1 = pv1.getId();
+     *  int id2 = pv2.getId();
      *  Todo pitsi11 = new Todo(id1); printti.lisaa(pitsi11);
      *  Todo pitsi12 = new Todo(id1); printti.lisaa(pitsi12);
      *  Todo pitsi21 = new Todo(id2); printti.lisaa(pitsi21);
@@ -93,18 +93,19 @@ public class Printti {
      *  Todo pitsi23 = new Todo(id2); printti.lisaa(pitsi23);
      *
      *  List<Todo> loytyneet;
-     *  loytyneet = printti.annaTodot(aku3);
+     *  loytyneet = printti.annaTodot(pv3);
      *  loytyneet.size() === 0;
-     *  loytyneet = printti.annaTodot(aku1);
+     *  loytyneet = printti.annaTodot(pv1);
      *  loytyneet.size() === 2;
      *  loytyneet.get(0) == pitsi11 === true;
      *  loytyneet.get(1) == pitsi12 === true;
-     *  loytyneet = printti.annaTodot(aku2);
+     *  loytyneet = printti.annaTodot(pv2);
      *  loytyneet.size() === 3;
      *  loytyneet.get(0) == pitsi21 === true;
      * </pre>
      */
     public List<Todo> annaTodot(Pvm pvm) {
+        System.out.println("Pvm ID: " + pvm.getId());
         return todos.annaTodot(pvm.getId());
     }
 

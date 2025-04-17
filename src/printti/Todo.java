@@ -20,7 +20,7 @@ public class Todo {
      * Alustetaan todo.  Toistaiseksi ei tarvitse tehdä mitään
      */
     public Todo() {
-        rekisteroi();
+      //  rekisteroi();
         // Vielä ei tarvita mitään
     }
 
