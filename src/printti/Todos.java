@@ -135,26 +135,17 @@ public class Todos implements Iterable<Todo>{
      *  loytyneet.get(0) == pitsi51 === true;
      * </pre>
      */
-//    public List<Todo> annaTodot(int date) {
-//        List<Todo> loydetyt = new ArrayList<Todo>();
-//        for (Todo task : alkiot)
-//            if (task.getPvm() == date) loydetyt.add(task);
-//        return loydetyt;
-//    }
-
     public List<Todo> annaTodot(int date) {
         List<Todo> loydetyt = new ArrayList<Todo>();
 
         for (Todo task : alkiot) {
-            System.out.println("Task Date: " + task.getDate() + ", Searching for Date: " + date);
             if (task.getDate() == date) {
                 loydetyt.add(task);
             }
         }
         return loydetyt;
     }
-
-
+    
     /**
      * Testiohjelma harrastuksille
      * @param args ei käytössä

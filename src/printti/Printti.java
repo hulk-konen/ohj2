@@ -84,6 +84,8 @@ public class Printti {
      *
      *  Printti printti = new Printti();
      *  Pvm pv1 = new Pvm(), pv2 = new Pvm(), pv3 = new Pvm();
+     *  pv1.luo();
+     *  pv2.luo();
      *  int id1 = pv1.getId();
      *  int id2 = pv2.getId();
      *  Todo pitsi11 = new Todo(id1); printti.lisaa(pitsi11);
@@ -105,7 +107,6 @@ public class Printti {
      * </pre>
      */
     public List<Todo> annaTodot(Pvm pvm) {
-        System.out.println("Pvm ID: " + pvm.getId());
         return todos.annaTodot(pvm.getId());
     }
 
