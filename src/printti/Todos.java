@@ -145,7 +145,7 @@ public class Todos implements Iterable<Todo>{
         }
         return loydetyt;
     }
-    
+
     /**
      * Testiohjelma harrastuksille
      * @param args ei käytössä

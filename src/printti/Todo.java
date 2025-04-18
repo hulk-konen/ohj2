@@ -46,6 +46,14 @@ public class Todo {
         status = random.nextInt(2);
     }
 
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
 
     /**
      * Tulostetaan todon tiedot
@@ -63,6 +71,13 @@ public class Todo {
     public void tulosta(OutputStream os) {
         tulosta(new PrintStream(os));
     }
+
+
+    public String getTask() {
+        return task;
+    }
+
+    public int getStatus() { return status; }
 
 
     /**

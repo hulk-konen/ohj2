@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import fi.jyu.mit.fxgui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import fi.jyu.mit.fxgui.ListChooser?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="fxgui.guiGUIController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxgui.guiGUIController">
    <left>
       <VBox spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
@@ -23,7 +20,7 @@
                   <ListChooser fx:id="chooserDates" prefWidth="130.0" />
                </content>
             </ScrollPane>
-            <Button mnemonicParsing="false" text="Add New Date" onAction="#handleAddNewPvm" />
+            <Button mnemonicParsing="false" onAction="#handleAddNewPvm" text="Add New Date" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -31,14 +28,13 @@
       </VBox>
    </left>
    <top>
-      <Label text="Daily Print" BorderPane.alignment="CENTER">
+      <Label text="Daily Print" BorderPane.alignment="TOP_LEFT">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="System Bold" size="18.0" />
          </font></Label>
    </top>
    <center>
-      <TextArea fx:id="textAreaPrintti" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"
-                editable="false" wrapText="true">
+      <TextArea fx:id="textAreaPrintti" editable="false" prefHeight="200.0" prefWidth="222.0" wrapText="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -50,12 +46,36 @@
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
+   <right>
+      <BorderPane>
+         <top>
+            <Label text="All todos">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+         </top>
+         <center>
+            <StringGrid editable="true" rivit="Date|Todo|Done&#10;2023-01-01|tiskit|0&#10;2024-01-01|ruoka|0&#10;2025-01-01|ostokset|1" BorderPane.alignment="CENTER" />
+         </center>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </BorderPane>
+   </right>
+
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Label text="Create / Edit todos" />
-            <Button fx:id="todoGUIButton" mnemonicParsing="false" text="Add todo" onAction="#handleAddNewTodo" />
+            <Button fx:id="todoGUIButton" mnemonicParsing="false" onAction="#handleAddNewTodo" text="Add todo" />
          </children>
+         <BorderPane.margin>
+            <Insets top="11.0" />
+         </BorderPane.margin>
       </HBox>
    </bottom>
 </BorderPane>

@@ -45,6 +45,11 @@ public class guiGUIController implements Initializable {
     @FXML
     private ListChooser<Pvm> chooserDates;
 
+//    private Printti printtiForTodo;
+
+
+
+
 
     @FXML
     private void handleAddNewTodo() {
@@ -54,6 +59,7 @@ public class guiGUIController implements Initializable {
 
             addGUIController controller = loader.getController();
             controller.setPrintti(printti);
+            controller.haePvm();
 
             Stage modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -116,9 +122,9 @@ public class guiGUIController implements Initializable {
 
     /**
      * avustaa uuden Pvm tekemisessä. palauttaa tai luo uuden
-     * @param pvmStr The date string
-     * @return The Pvm object for the date
-     * @throws SailoException if there's an error creating the date
+     * @param pvmStr  date string
+     * @return Pvm
+     * @throws SailoException jos luonnissa ongelmia
      */
     private Pvm findOrCreatePvm(String pvmStr) throws SailoException {
         for (int i = 0; i < printti.getDates(); i++) {
@@ -181,10 +187,10 @@ public class guiGUIController implements Initializable {
      * Näyttää annetun päivämäärän tiedot
      * @param pvm näytettävä päivämäärä
      */
-    protected void naytaPvm(Pvm pvm) {
-        if (pvm == null) return;
-        showPrinttiForPvm(pvm.getPvm());
-    }
+//    protected void naytaPvm(Pvm pvm) {
+//        if (pvm == null) return;
+//        showPrinttiForPvm(pvm.getPvm());
+//    }
 
     /**
      * Hakee päivämäärät listaan
@@ -203,7 +209,6 @@ public class guiGUIController implements Initializable {
      */
     public void setPrintti(Printti printti) {
         this.printti = printti;
-        haePvm();
     }
 
     public boolean voikoSulkea() {
@@ -269,7 +274,8 @@ public class guiGUIController implements Initializable {
                     List<Todo> todos = printti.annaTodot(pvm);
                     StringBuilder printContent = new StringBuilder("Daily print " + date + "\nTodos:\n");
                     for (Todo todo : todos) {
-                        printContent.append(todo.toString()).append("\n");
+                        printContent.append(todo.getTask()).append(" status: ");
+                        printContent.append(todo.getStatus()).append("\n");
                     }
                     textAreaPrintti.setText(printContent.toString());
                     return;

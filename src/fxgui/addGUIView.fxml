@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import fi.jyu.mit.fxgui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -11,10 +12,13 @@
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
         </Label>
     </top>
     <center>
-        <GridPane BorderPane.alignment="CENTER">
+        <GridPane hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
@@ -26,18 +30,25 @@
             </rowConstraints>
             <children>
                 <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <DatePicker fx:id="datePickerAdd" onAction="#handleDateSelection" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <ScrollPane fitToWidth="true" prefHeight="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <content>
+                        <ListChooser fx:id="chooserDatesTodo" prefWidth="130.0" />
+                    </content>
+                </ScrollPane>
                 <Label text="Todo" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <TextArea fx:id="newTodo" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label prefHeight="66.0" prefWidth="200.0" text="Done" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <CheckBox fx:id="isDone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
         </GridPane>
     </center>
     <bottom>
         <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="goListButton" mnemonicParsing="false" onAction="#handleBackGUI" text="Go to list view" />
+                <Button fx:id="goListButton" mnemonicParsing="false" onAction="#handleBackGUI" text="Go to main" />
                 <Button fx:id="submitNewButton" mnemonicParsing="false" text="Submit" />
             </children>
         </HBox>
