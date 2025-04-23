@@ -7,11 +7,15 @@ package printti;
  * @version 1.0, 11.04.2025
  */
 
+import java.io.*;
 import java.util.*;
 
-public class Todos implements Iterable<Todo>{
 
-    private String                      tiedostonNimi = "";
+public class Todos implements Iterable<Todo>{
+    private boolean muutettu = false;
+    private String tiedostonPerusNimi = "";
+
+//    private String                      tiedostonNimi = "";
 
     /** Taulukko todoista */
     private final Collection<Todo> alkiot        = new ArrayList<Todo>();
@@ -31,28 +35,141 @@ public class Todos implements Iterable<Todo>{
      */
     public void lisaa(Todo task) {
         alkiot.add(task);
+        muutettu = true;
     }
 
-
     /**
-     * Lukee todot tiedostosta.
-     * TODO Kesken.
-     * @param hakemisto tiedoston hakemisto
+     * Lukee harrastukset tiedostosta.
+     * @param tied tiedoston nimen alkuosa
      * @throws SailoException jos lukeminen epäonnistuu
+     *
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * #import java.io.File;
+     *  Harrastukset harrasteet = new Harrastukset();
+     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(2);
+     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(1);
+     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(2);
+     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(1);
+     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(2);
+     *  String tiedNimi = "testikelmit";
+     *  File ftied = new File(tiedNimi+".dat");
+     *  ftied.delete();
+     *  harrasteet.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  harrasteet.lisaa(pitsi21);
+     *  harrasteet.lisaa(pitsi11);
+     *  harrasteet.lisaa(pitsi22);
+     *  harrasteet.lisaa(pitsi12);
+     *  harrasteet.lisaa(pitsi23);
+     *  harrasteet.tallenna();
+     *  harrasteet = new Harrastukset();
+     *  harrasteet.lueTiedostosta(tiedNimi);
+     *  Iterator<Harrastus> i = harrasteet.iterator();
+     *  i.next().toString() === pitsi21.toString();
+     *  i.next().toString() === pitsi11.toString();
+     *  i.next().toString() === pitsi22.toString();
+     *  i.next().toString() === pitsi12.toString();
+     *  i.next().toString() === pitsi23.toString();
+     *  i.hasNext() === false;
+     *  harrasteet.lisaa(pitsi23);
+     *  harrasteet.tallenna();
+     *  ftied.delete() === true;
+     *  File fbak = new File(tiedNimi+".bak");
+     *  fbak.delete() === true;
+     * </pre>
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + "todot.dat";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
+    public void lueTiedostosta(String tied) throws SailoException {
+        setTiedostonPerusNimi(tied);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi())) ) {
+
+            String rivi;
+            while ( (rivi = fi.readLine()) != null ) {
+                rivi = rivi.trim();
+                if ( "".equals(rivi) || rivi.charAt(0) == ';' ) continue;
+                Todo todo = new Todo();
+                todo.parse(rivi); // voisi olla virhekäsittely
+                lisaa(todo);
+            }
+            muutettu = false;
+
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+        } catch ( IOException e ) {
+            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
+        }
     }
 
 
+    /*
+     * Luetaan aikaisemmin annetun nimisestä tiedostosta
+     * @throws SailoException jos tulee poikkeus
+     */
+    public void lueTiedostosta() throws SailoException {
+        lueTiedostosta(getTiedostonPerusNimi());
+    }
+
+
+
     /**
-     * Tallentaa todot tiedostoon.
-     * TODO Kesken.
+     * Tallentaa harrastukset tiedostoon.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
+        if ( !muutettu ) return;
+
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete(); //  if ... System.err.println("Ei voi tuhota");
+        ftied.renameTo(fbak); //  if ... System.err.println("Ei voi nimetä");
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            for (Todo todo : this) {
+                fo.println(todo.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
+    }
+
+
+    /**
+     * Asettaa tiedoston perusnimen ilan tarkenninta
+     * @param tied tallennustiedoston perusnimi
+     */
+    public void setTiedostonPerusNimi(String tied) {
+        tiedostonPerusNimi = tied;
+    }
+
+
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonPerusNimi() {
+        return tiedostonPerusNimi;
+    }
+
+
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonNimi() {
+        return tiedostonPerusNimi + ".dat";
+    }
+
+
+    /**
+     * Palauttaa varakopiotiedoston nimen
+     * @return varakopiotiedoston nimi
+     */
+    public String getBakNimi() {
+        return tiedostonPerusNimi + ".bak";
     }
 
 
@@ -63,6 +180,8 @@ public class Todos implements Iterable<Todo>{
     public int getLkm() {
         return alkiot.size();
     }
+
+
 
 
     /**

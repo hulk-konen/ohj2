@@ -1,5 +1,7 @@
 package printti;
+import java.util.Collection;
 import java.util.List;
+import java.io.File;
 
 /**
  * printti-luokka, joka huolehtii jäsenistöstä.  Pääosin kaikki metodit
@@ -13,8 +15,8 @@ import java.util.List;
  */
 public class Printti {
 
-    private final Dates dates = new Dates();
-    private final Todos todos = new Todos();
+    private Dates dates = new Dates();
+    private Todos todos = new Todos();
 
     /**
      * Palautaa printin pvm määrän
@@ -116,20 +118,148 @@ public class Printti {
      * @param pvm jota käyteään lukemisessa
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String pvm) throws SailoException {
-        dates.lueTiedostosta(pvm);
-        todos.lueTiedostosta(pvm);
+//    public void lueTiedostosta(String pvm) throws SailoException {
+//        dates.lueTiedostosta(pvm);
+//        todos.lueTiedostosta(pvm);
+//    }
+
+
+    /**
+     * Asettaa tiedostojen perusnimet
+     * @param nimi uusi nimi
+     */
+    public void setTiedosto(String nimi) {
+        File dir = new File(nimi);
+        dir.mkdirs();
+        String hakemistonNimi = "";
+        if ( !nimi.isEmpty() ) hakemistonNimi = nimi +"/";
+        todos.setTiedostonPerusNimi(hakemistonNimi + "todos");
+        dates.setTiedostonPerusNimi(hakemistonNimi + "dates");
     }
+
+
+
+    /**
+     * Lukee kerhon tiedot tiedostosta
+     * @param nimi jota käyteään lukemisessa
+     * @throws SailoException jos lukeminen epäonnistuu
+     *
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * #import java.io.*;
+     * #import java.util.*;
+     *
+     *  Kerho kerho = new Kerho();
+     *
+     *  Jasen aku1 = new Jasen(); aku1.vastaaAkuAnkka(); aku1.rekisteroi();
+     *  Jasen aku2 = new Jasen(); aku2.vastaaAkuAnkka(); aku2.rekisteroi();
+     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(aku1.getTunnusNro());
+     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(aku1.getTunnusNro());
+     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *
+     *  String hakemisto = "testikelmit";
+     *  File dir = new File(hakemisto);
+     *  File ftied  = new File(hakemisto+"/nimet.dat");
+     *  File fhtied = new File(hakemisto+"/harrastukset.dat");
+     *  dir.mkdir();
+     *  ftied.delete();
+     *  fhtied.delete();
+     *  kerho.lueTiedostosta(hakemisto); #THROWS SailoException
+     *  kerho.lisaa(aku1);
+     *  kerho.lisaa(aku2);
+     *  kerho.lisaa(pitsi21);
+     *  kerho.lisaa(pitsi11);
+     *  kerho.lisaa(pitsi22);
+     *  kerho.lisaa(pitsi12);
+     *  kerho.lisaa(pitsi23);
+     *  kerho.tallenna();
+     *  kerho = new Kerho();
+     *  kerho.lueTiedostosta(hakemisto);
+     *  Collection<Jasen> kaikki = kerho.etsi("",-1);
+     *  Iterator<Jasen> it = kaikki.iterator();
+     *  it.next() === aku1;
+     *  it.next() === aku2;
+     *  it.hasNext() === false;
+     *  List<Harrastus> loytyneet = kerho.annaHarrastukset(aku1);
+     *  Iterator<Harrastus> ih = loytyneet.iterator();
+     *  ih.next() === pitsi11;
+     *  ih.next() === pitsi12;
+     *  ih.hasNext() === false;
+     *  loytyneet = kerho.annaHarrastukset(aku2);
+     *  ih = loytyneet.iterator();
+     *  ih.next() === pitsi21;
+     *  ih.next() === pitsi22;
+     *  ih.next() === pitsi23;
+     *  ih.hasNext() === false;
+     *  kerho.lisaa(aku2);
+     *  kerho.lisaa(pitsi23);
+     *  kerho.tallenna();
+     *  ftied.delete()  === true;
+     *  fhtied.delete() === true;
+     *  File fbak = new File(hakemisto+"/nimet.bak");
+     *  File fhbak = new File(hakemisto+"/harrastukset.bak");
+     *  fbak.delete() === true;
+     *  fhbak.delete() === true;
+     *  dir.delete() === true;
+     * </pre>
+     */
+    public void lueTiedostosta(String nimi) throws SailoException {
+        dates = new Dates(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
+        todos = new Todos();
+
+        setTiedosto(nimi);
+        dates.lueTiedostosta();
+        todos.lueTiedostosta();
+    }
+
+
+    /**
+     * Tallenttaa kerhon tiedot tiedostoon.
+     * Vaikka jäsenten tallettamien epäonistuisi, niin yritetään silti tallettaa
+     * harrastuksia ennen poikkeuksen heittämistä.
+     * @throws SailoException jos tallettamisessa ongelmia
+     */
+    public void talleta() throws SailoException {
+        String virhe = "";
+        try {
+            dates.talleta();
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+
+        try {
+            todos.talleta();
+        } catch ( SailoException ex ) {
+            virhe += ex.getMessage();
+        }
+        if ( !"".equals(virhe) ) throw new SailoException(virhe);
+    }
+
+
+    /**
+     * Palauttaa "taulukossa" hakuehtoon vastaavien jäsenten viitteet
+     * @param hakuehto hakuehto
+     * @param k etsittävän kentän indeksi
+     * @return tietorakenteen löytyneistä jäsenistä
+     * @throws SailoException Jos jotakin menee väärin
+     */
+    public Collection<Pvm> etsi(String hakuehto, int k) throws SailoException {
+        return dates.etsi(hakuehto, k);
+    }
+
 
 
     /**
      * Tallettaa kerhon tiedot tiedostoon
      * @throws SailoException jos tallettamisessa ongelmia
      */
-    public void talleta() throws SailoException {
-        dates.talleta();
-        todos.talleta();
-    }
+//    public void talleta() throws SailoException {
+//        dates.talleta();
+//        todos.talleta();
+//    }
 
 
     /**
@@ -159,13 +289,18 @@ public class Printti {
 
             System.out.println("============= Kerhon testi =================");
 
-            for (int i = 0; i < printti.getDates(); i++) {
-                Pvm pvm = printti.annaPvm(i);
+            Collection<Pvm> dates = printti.etsi("", -1);
+            int i = 0;
+            for (Pvm pvm: dates) {
+
+//                for (int i = 0; i < printti.getDates(); i++) {
+//                Pvm pvm = printti.annaPvm(i);
                 System.out.println("Pvm paikassa: " + i);
                 pvm.tulosta(System.out);
                 List<Todo> loytyneet = printti.annaTodot(pvm);
                 for (Todo todo : loytyneet)
                     todo.tulosta(System.out);
+                i++;
             }
 
         } catch (SailoException ex) {

@@ -72,6 +72,10 @@
          <children>
             <Label text="Create / Edit todos" />
             <Button fx:id="todoGUIButton" mnemonicParsing="false" onAction="#handleAddNewTodo" text="Add todo" />
+
+         </children>
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna"></Button>
          </children>
          <BorderPane.margin>
             <Insets top="11.0" />

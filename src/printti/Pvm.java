@@ -6,6 +6,8 @@ package printti;
  * @author tohulkko
  * @version 1.0, 11.04.2025
  */
+import fi.jyu.mit.ohj2.Mjonot;
+
 import java.io.*;
 import java.util.Random;
 import java.time.LocalDate;
@@ -69,6 +71,37 @@ public class Pvm {
         tulosta(new PrintStream(os));
     }
 
+    /**
+     * Selvitää harrastuksen tiedot | erotellusta merkkijonosta.
+     * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusnro.
+     * @param rivi josta harrastuksen tiedot otetaan
+     * @example
+     * <pre name="test">
+     *   Harrastus harrastus = new Harrastus();
+     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   harrastus.getJasenNro() === 10;
+     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
+     *
+     *   harrastus.rekisteroi();
+     *   int n = harrastus.getTunnusNro();
+     *   harrastus.parse(""+(n+20));
+     *   harrastus.rekisteroi();
+     *   harrastus.getTunnusNro() === n+20+1;
+     *   harrastus.toString()     === "" + (n+20+1) + "|10|Kalastus|1949|22";
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuffer sb = new StringBuffer(rivi);
+        setId(Mjonot.erota(sb, '|', getId()));
+        pvm = Mjonot.erota(sb, '|', pvm);
+    }
+
+    @Override
+    public String toString() {
+        return id + "|" + pvm;
+    }
+
+
 
     /**
      * Antaa päiville seuraavan rekisterinumeron.
@@ -90,6 +123,18 @@ public class Pvm {
         seuraavaNro++;
         return id;
     }
+
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param nr asetettava tunnusnumero
+     */
+    private void setId(int nr) {
+        id = nr;
+        if ( id >= seuraavaNro ) seuraavaNro = id + 1;
+    }
+
+
 
     public void setPvm(String pvm) {
         this.pvm = pvm;

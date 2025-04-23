@@ -2,6 +2,7 @@ package fxgui;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -47,8 +48,18 @@ public class guiGUIController implements Initializable {
 
 //    private Printti printtiForTodo;
 
+    @FXML private void handleTallenna() {
+        tallenna();
+    }
 
+    @FXML private void handleAvaa() {
+        avaa();
+    }
 
+    @FXML private void handleLopeta() {
+        tallenna();
+        Platform.exit();
+    }
 
 
     @FXML
@@ -219,12 +230,13 @@ public class guiGUIController implements Initializable {
     /**
      * Tietojen tallennus
      */
-    private void tallenna() {
+    private String tallenna() {
         try {
             printti.talleta();
-            Dialogs.showMessageDialog("Saved!");
+            return null;
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Save problem: " + e.getMessage());
+            return e.getMessage();
         }
     }
 
@@ -236,6 +248,7 @@ public class guiGUIController implements Initializable {
         String uusinimi = PrintinNimiController.kysyNimi(null, printinnimi);
         if (uusinimi == null) return false;
         lueTiedosto(uusinimi);
+        haePvm();
         return true;
     }
 
