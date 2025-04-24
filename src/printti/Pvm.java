@@ -52,7 +52,6 @@ public class Pvm {
         vastaaPvm(apupvm);
     }
 
-
     /**
      * Tulostetaan pvm tiedot
      * @param out tietovirta johon tulostetaan
@@ -62,7 +61,6 @@ public class Pvm {
                 + pvm);
     }
 
-
     /**
      * Tulostetaan pvm tiedot
      * @param os tietovirta johon tulostetaan
@@ -71,23 +69,25 @@ public class Pvm {
         tulosta(new PrintStream(os));
     }
 
+
     /**
      * Selvitää harrastuksen tiedot | erotellusta merkkijonosta.
      * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusnro.
      * @param rivi josta harrastuksen tiedot otetaan
      * @example
      * <pre name="test">
-     *   Harrastus harrastus = new Harrastus();
-     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   harrastus.getJasenNro() === 10;
-     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
+     *   Pvm pvm1 = new Pvm();
+     *   pvm1.parse("   2   | 2025-04-23");
+     *   pvm1.getId() === 2;
+     *   pvm1.toString() === "2|2025-04-23";
      *
-     *   harrastus.rekisteroi();
-     *   int n = harrastus.getTunnusNro();
-     *   harrastus.parse(""+(n+20));
-     *   harrastus.rekisteroi();
-     *   harrastus.getTunnusNro() === n+20+1;
-     *   harrastus.toString()     === "" + (n+20+1) + "|10|Kalastus|1949|22";
+     *   Pvm pvm2 = new Pvm();
+     *   pvm2.luo();
+     *   int n = pvm2.getId();
+     *   pvm2.parse("" + (n + 20) + "|2025-05-01");
+     *   pvm2.luo();
+     *   pvm2.getId() === n + 20 + 1;
+     *   pvm2.toString() === "" + (n + 20 + 1) + "|2025-05-01";
      * </pre>
      */
     public void parse(String rivi) {
@@ -100,8 +100,6 @@ public class Pvm {
     public String toString() {
         return id + "|" + pvm;
     }
-
-
 
     /**
      * Antaa päiville seuraavan rekisterinumeron.
@@ -133,8 +131,6 @@ public class Pvm {
         id = nr;
         if ( id >= seuraavaNro ) seuraavaNro = id + 1;
     }
-
-
 
     public void setPvm(String pvm) {
         this.pvm = pvm;

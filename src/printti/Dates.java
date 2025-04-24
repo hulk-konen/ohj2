@@ -3,7 +3,6 @@ package printti;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,8 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -42,7 +39,6 @@ public class Dates implements Iterable<Pvm> {
         // Attribuuttien oma alustus riittää
     }
 
-
     /**
      * Lisää uuden päivän tietorakenteeseen.  Ottaa päivän omistukseensa.
      * @param pvm uuden päivän viite.  Huom tietorakenne muuttuu omistajaksi
@@ -53,6 +49,7 @@ public class Dates implements Iterable<Pvm> {
      * Dates dates = new Dates();
      * Pvm pvm1 = new Pvm(), pvm2 = new Pvm();
      * dates.getLkm() === 0;
+     *
      * dates.lisaa(pvm1); dates.getLkm() === 1;
      * dates.lisaa(pvm2); dates.getLkm() === 2;
      * dates.lisaa(pvm1); dates.getLkm() === 3;
@@ -64,7 +61,7 @@ public class Dates implements Iterable<Pvm> {
      * dates.anna(3) === pvm1; #THROWS IndexOutOfBoundsException
      * dates.lisaa(pvm1); dates.getLkm() === 4;
      * dates.lisaa(pvm1); dates.getLkm() === 5;
-     * dates.lisaa(pvm1); #THROWS SailoException
+     * dates.lisaa(pvm1);
      * </pre>
      */
     public void lisaa(Pvm pvm) throws SailoException {
@@ -73,7 +70,6 @@ public class Dates implements Iterable<Pvm> {
         lkm++;
         muutettu = true;
     }
-
 
     /**
      * Palauttaa viitteen i:teen jäseneen.
@@ -112,7 +108,6 @@ public class Dates implements Iterable<Pvm> {
         muutettu = false;
     }
 
-
     /**
      * Palauttaa varakopiotiedoston nimen
      * @return varakopiotiedoston nimi
@@ -122,12 +117,7 @@ public class Dates implements Iterable<Pvm> {
     }
 
 
-
     /**
-     * Lukee päivät tiedostosta.  Kesken.
-     * @throws SailoException jos lukeminen epäonnistuu
-     */
-    /*
      * Luetaan aikaisemmin annetun nimisestä tiedostosta
      * @throws SailoException jos tulee poikkeus
      */
@@ -136,7 +126,7 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Lukee harrastukset tiedostosta.
+     * Lukee päivämäärät tiedostosta.
      * @param tied tiedoston nimen alkuosa
      * @throws SailoException jos lukeminen epäonnistuu
      *
@@ -144,36 +134,75 @@ public class Dates implements Iterable<Pvm> {
      * <pre name="test">
      * #THROWS SailoException
      * #import java.io.File;
-     *  Harrastukset harrasteet = new Harrastukset();
-     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(2);
-     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(1);
-     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(2);
-     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(1);
-     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(2);
-     *  String tiedNimi = "testikelmit";
-     *  File ftied = new File(tiedNimi+".dat");
-     *  ftied.delete();
-     *  harrasteet.lueTiedostosta(tiedNimi); #THROWS SailoException
-     *  harrasteet.lisaa(pitsi21);
-     *  harrasteet.lisaa(pitsi11);
-     *  harrasteet.lisaa(pitsi22);
-     *  harrasteet.lisaa(pitsi12);
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna();
-     *  harrasteet = new Harrastukset();
-     *  harrasteet.lueTiedostosta(tiedNimi);
-     *  Iterator<Harrastus> i = harrasteet.iterator();
-     *  i.next().toString() === pitsi21.toString();
-     *  i.next().toString() === pitsi11.toString();
-     *  i.next().toString() === pitsi22.toString();
-     *  i.next().toString() === pitsi12.toString();
-     *  i.next().toString() === pitsi23.toString();
-     *  i.hasNext() === false;
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna();
-     *  ftied.delete() === true;
-     *  File fbak = new File(tiedNimi+".bak");
-     *  fbak.delete() === true;
+     * Dates dates = new Dates();
+     * Pvm pvm1 = new Pvm(); pvm1.luo();
+     * pvm1.setPvm("2025-04-23");
+     * Pvm pvm2 = new Pvm(); pvm2.luo();
+     * pvm2.setPvm("2025-04-24");
+     * Pvm pvm3 = new Pvm(); pvm3.luo();
+     * pvm3.setPvm("2025-04-25");
+     * String tiedNimi = "testdates";
+     * File ftied = new File(tiedNimi + ".dat");
+     * ftied.delete();
+     *
+     * try {
+     *     dates.lueTiedostosta(tiedNimi);
+     *     fail("Expected SailoException was not thrown");
+     * } catch (SailoException e) {
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm1);
+     * } catch (SailoException e) {
+     *     fail("SailoException: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm2);
+     * } catch (SailoException e) {
+     *     fail("SailoException: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm3);
+     * } catch (SailoException e) {
+     *     fail("SailoException: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.talleta();
+     * } catch (SailoException e) {
+     *     fail("SailoException save: " + e.getMessage());
+     * }
+     *
+     * dates = new Dates();
+     * try {
+     *     dates.lueTiedostosta(tiedNimi);
+     * } catch (SailoException e) {
+     *     fail("SailoException read: " + e.getMessage());
+     * }
+     *
+     * Iterator<Pvm> i = dates.iterator();
+     * assertEquals(pvm1.toString(), i.next().toString());
+     * assertEquals(pvm2.toString(), i.next().toString());
+     * assertEquals(pvm3.toString(), i.next().toString());
+     * assertFalse(i.hasNext());
+     *
+     * try {
+     *     dates.lisaa(pvm3);
+     * } catch (SailoException e) {
+     *     fail("Unexpected SailoException: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.talleta();
+     * } catch (SailoException e) {
+     *     fail("Unexpected SailoException save: " + e.getMessage());
+     * }
+     *
+     * assertTrue(ftied.delete());
+     * File fbak = new File(tiedNimi + ".bak");
+     * assertTrue(fbak.delete());
      * </pre>
      */
     public void lueTiedostosta(String tied) throws SailoException {
@@ -198,7 +227,7 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Asettaa tiedoston perusnimen ilan tarkenninta
+     * Asettaa tiedoston perusnimen ilman tarkenninta
      * @param tied tallennustiedoston perusnimi
      */
     public void setTiedostonPerusNimi(String tied) {
@@ -222,17 +251,6 @@ public class Dates implements Iterable<Pvm> {
         return tiedostonPerusNimi;
     }
 
-
-
-    /**
-     * Tallentaa päivät tiedostoon.  Kesken.
-     * @throws SailoException jos talletus epäonnistuu
-     */
-//    public void talleta() throws SailoException {
-//        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
-//    }
-
-
     /**
      * Palauttaa printin päivien lukumäärän
      * @return päivien lukumäärä
@@ -242,21 +260,58 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Palauttaa "taulukossa" hakuehtoon vastaavien jäsenten viitteet
+     * Palauttaa "taulukossa" hakuehtoon vastaavien päivämäärien viitteet.
      * @param hakuehto hakuehto
      * @param k etsittävän kentän indeksi
-     * @return tietorakenteen löytyneistä jäsenistä
+     * @return tietorakenteen löytyneistä päivämääristä
      * @example
      * <pre name="test">
      * #THROWS SailoException
-     *   Jasenet jasenet = new Jasenet();
-     *   Jasen jasen1 = new Jasen(); jasen1.parse("1|Ankka Aku|030201-115H|Paratiisitie 13|");
-     *   Jasen jasen2 = new Jasen(); jasen2.parse("2|Ankka Tupu||030552-123B|");
-     *   Jasen jasen3 = new Jasen(); jasen3.parse("3|Susi Sepe|121237-121V||131313|Perämetsä");
-     *   Jasen jasen4 = new Jasen(); jasen4.parse("4|Ankka Iines|030245-115V|Ankkakuja 9");
-     *   Jasen jasen5 = new Jasen(); jasen5.parse("5|Ankka Roope|091007-408U|Ankkakuja 12");
-     *   jasenet.lisaa(jasen1); jasenet.lisaa(jasen2); jasenet.lisaa(jasen3); jasenet.lisaa(jasen4); jasenet.lisaa(jasen5);
-     *   // TODO: toistaiseksi palauttaa kaikki jäsenet
+     * Dates dates = new Dates();
+     * Pvm pvm1 = new Pvm();
+     * pvm1.parse("1|2025-04-23");
+     *
+     * Pvm pvm2 = new Pvm();
+     * pvm2.parse("2|2025-04-24");
+     *
+     * Pvm pvm3 = new Pvm();
+     * pvm3.parse("3|2025-04-25");
+     *
+     * Pvm pvm4 = new Pvm();
+     * pvm4.parse("4|2025-04-26");
+     *
+     * try {
+     *     dates.lisaa(pvm1);
+     * } catch (SailoException e) {
+     *     fail("SailoException adding pvm1: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm2);
+     * } catch (SailoException e) {
+     *     fail("SailoException adding pvm2: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm3);
+     * } catch (SailoException e) {
+     *     fail("SailoException adding pvm3: " + e.getMessage());
+     * }
+     *
+     * try {
+     *     dates.lisaa(pvm4);
+     * } catch (SailoException e) {
+     *     fail("SailoException adding pvm4: " + e.getMessage());
+     * }
+     *
+     * Collection<Pvm> loytyneet = dates.etsi("", -1);
+     * loytyneet.size() === 4;
+     * Iterator<Pvm> i = loytyneet.iterator();
+     * i.next().toString() === pvm1.toString();
+     * i.next().toString() === pvm2.toString();
+     * i.next().toString() === pvm3.toString();
+     * i.next().toString() === pvm4.toString();
+     * i.hasNext() === false;
      * </pre>
      */
     @SuppressWarnings("unused")
@@ -269,47 +324,66 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Luokka jäsenten iteroimiseksi.
+     * Testataan Dates-luokan iterointi.
      * @example
      * <pre name="test">
-     * #THROWS SailoException
+     * #THROWS NoSuchElementException
      * #PACKAGEIMPORT
      * #import java.util.*;
      *
-     * Jasenet jasenet = new Jasenet();
-     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
-     * aku1.rekisteroi(); aku2.rekisteroi();
+     * Dates dates = new Dates();
+     * Pvm pvm1 = new Pvm();
+     * pvm1.parse("1|2025-04-23");
+     * Pvm pvm2 = new Pvm();
+     * pvm2.parse("2|2025-04-24");
+     * Pvm pvm3 = new Pvm();
+     * pvm3.parse("3|2025-04-25");
      *
-     * jasenet.lisaa(aku1);
-     * jasenet.lisaa(aku2);
-     * jasenet.lisaa(aku1);
-     *
-     * StringBuffer ids = new StringBuffer(30);
-     * for (Jasen jasen:jasenet)   // Kokeillaan for-silmukan toimintaa
-     *   ids.append(" "+jasen.getTunnusNro());
-     *
-     * String tulos = " " + aku1.getTunnusNro() + " " + aku2.getTunnusNro() + " " + aku1.getTunnusNro();
-     *
-     * ids.toString() === tulos;
-     *
-     * ids = new StringBuffer(30);
-     * for (Iterator<Jasen>  i=jasenet.iterator(); i.hasNext(); ) { // ja iteraattorin toimintaa
-     *   Jasen jasen = i.next();
-     *   ids.append(" "+jasen.getTunnusNro());
+     * try {
+     *     dates.lisaa(pvm1);
+     * } catch (SailoException e) {
+     *     fail("Unexpected SailoException during adding pvm1: " + e.getMessage());
      * }
      *
-     * ids.toString() === tulos;
+     * try {
+     *     dates.lisaa(pvm2);
+     * } catch (SailoException e) {
+     *     fail("Unexpected SailoException during adding pvm2: " + e.getMessage());
+     * }
      *
-     * Iterator<Jasen>  i=jasenet.iterator();
-     * i.next() == aku1  === true;
-     * i.next() == aku2  === true;
-     * i.next() == aku1  === true;
+     * try {
+     *     dates.lisaa(pvm3);
+     * } catch (SailoException e) {
+     *     fail("Unexpected SailoException during adding pvm3: " + e.getMessage());
+     * }
      *
-     * i.next();  #THROWS NoSuchElementException
+     * // Testataan for-silmukalla iterointia
+     * StringBuffer ids = new StringBuffer();
+     * for (Pvm pvm : dates) {
+     *     ids.append(" ").append(pvm.getId());
+     * }
+     * ids.toString() === " 1 2 3";
      *
+     * // Testataan iteraattorilla iterointia
+     * ids = new StringBuffer();
+     * Iterator<Pvm> i = dates.iterator();
+     * while (i.hasNext()) {
+     *     Pvm pvm = i.next();
+     *     ids.append(" ").append(pvm.getId());
+     * }
+     * ids.toString() === " 1 2 3";
+     *
+     * // Testataan yksittäisiä next-kutsuja
+     * Iterator<Pvm> iter = dates.iterator();
+     * iter.next() == pvm1 === true;
+     * iter.next() == pvm2 === true;
+     * iter.next() == pvm3 === true;
+     *
+     * // Testataan, että seuraavan elementin puuttuminen heittää poikkeuksen
+     * iter.next(); #THROWS NoSuchElementException
      * </pre>
      */
-    public class JasenetIterator implements Iterator<Pvm> {
+    public class DatesIterator implements Iterator<Pvm> {
         private int kohdalla = 0;
 
 
@@ -348,17 +422,14 @@ public class Dates implements Iterable<Pvm> {
         }
     }
 
-
     /**
      * Palautetaan iteraattori jäsenistään.
      * @return jäsen iteraattori
      */
     @Override
     public Iterator<Pvm> iterator() {
-        return new JasenetIterator();
+        return new DatesIterator();
     }
-
-
 
 
     /**

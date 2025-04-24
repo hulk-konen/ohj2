@@ -182,8 +182,6 @@ public class Todos implements Iterable<Todo>{
     }
 
 
-
-
     /**
      * Iteraattori kaikkien todoitten läpikäymiseen
      * @return todo -iteraattori
