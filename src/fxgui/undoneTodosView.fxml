@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxgui.undoneTodosController">
+    <top>
+        <Label text="Undone Todos" style="-fx-font-size: 16px;" BorderPane.alignment="CENTER" />
+    </top>
+    <center>
+        <ListView fx:id="undoneTodosListView" />
+    </center>
+    <bottom>
+        <Button text="Close" onAction="#handleClose" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>

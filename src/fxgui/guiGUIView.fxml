@@ -80,12 +80,14 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
-            <Label text="Create / Edit todos" />
+            <Label text="Create todos" />
             <Button fx:id="todoGUIButton" mnemonicParsing="false" onAction="#handleAddNewTodo" text="Add todo" />
-
          </children>
          <children>
             <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
+         </children>
+         <children>
+            <Button fx:id="haeTekemattomatButton" text="Hae päivän tekemättömät" onAction="#handleHaeTekemattomat" />
          </children>
          <BorderPane.margin>
             <Insets top="11.0" />

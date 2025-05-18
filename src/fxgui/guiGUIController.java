@@ -19,6 +19,7 @@
     import java.time.LocalDate;
     import java.util.List;
     import java.util.ResourceBundle;
+    import java.util.stream.Collectors;
 
     import static fxgui.TietueDialogController.getFieldId;
 
@@ -158,6 +159,45 @@
             }
         }
 
+
+        @FXML
+        private void handleHaeTekemattomat() {
+            if (printti == null) {
+                Dialogs.showMessageDialog("No data available!");
+                return;
+            }
+
+            // Get all undone Todos for the selected date
+            List<Todo> undoneTodos = printti.annaTodot(pvmKohdalla).stream()
+                    .filter(todo -> todo.getStatus() == 0) // Status 0 means undone
+                    .sorted((t1, t2) -> t1.getTask().compareToIgnoreCase(t2.getTask())) // Sort by task name
+                    .collect(Collectors.toList());
+            if (undoneTodos.isEmpty()) {
+                Dialogs.showMessageDialog("Nice, no undone things!");
+                return;
+            }
+
+                try {
+
+                // Load the dialog
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("undoneTodosView.fxml")); // Ensure this path is correct
+                Parent root = loader.load();
+
+                // Set the undone Todos in the dialog controller
+                undoneTodosController controller = loader.getController();
+                controller.setUndoneTodos(undoneTodos);
+
+                // Show the dialog
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.setTitle("Undone Todos");
+                dialogStage.setScene(new Scene(root));
+                dialogStage.showAndWait();
+
+            } catch (IOException e) {
+                Dialogs.showMessageDialog("Error opening dialog: " + e.getMessage());
+            }
+        }
         /**
          * tarkastaa onko pvm olemassa
          * @param pvmStr pvm string
