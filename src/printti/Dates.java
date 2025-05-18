@@ -69,7 +69,49 @@ public class Dates implements Iterable<Pvm> {
         alkiot[lkm] = pvm;
         lkm++;
         muutettu = true;
+        // uusi taulukko jos täynnä 2x isompi, kopioi vanha, aseta uusi taulukko vanhan taulukon tilalle
+        // tai valmis metodi ehkä java util
     }
+
+    /**
+     * Korvaa jäsenen tietorakenteessa.  Ottaa jäsenen omistukseensa.
+     * Etsitään samalla tunnusnumerolla oleva jäsen.  Jos ei löydy,
+     * niin lisätään uutena jäsenenä.
+     * @param jasen lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @throws SailoException jos tietorakenne on jo täynnä
+     * <pre name="test">
+     * #THROWS SailoException,CloneNotSupportedException
+     * #PACKAGEIMPORT
+     * Jasenet jasenet = new Jasenet();
+     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
+     * aku1.rekisteroi(); aku2.rekisteroi();
+     * jasenet.getLkm() === 0;
+     * jasenet.korvaaTaiLisaa(aku1); jasenet.getLkm() === 1;
+     * jasenet.korvaaTaiLisaa(aku2); jasenet.getLkm() === 2;
+     * Jasen aku3 = aku1.clone();
+     * aku3.aseta(3,"kkk");
+     * Iterator<Jasen> it = jasenet.iterator();
+     * it.next() == aku1 === true;
+     * jasenet.korvaaTaiLisaa(aku3); jasenet.getLkm() === 2;
+     * it = jasenet.iterator();
+     * Jasen j0 = it.next();
+     * j0 === aku3;
+     * j0 == aku3 === true;
+     * j0 == aku1 === false;
+     * </pre>
+     */
+    public void korvaaTaiLisaa(Pvm pvm) throws SailoException {
+        int id = pvm.getId();
+        for (int i = 0; i < lkm; i++) {
+            if ( alkiot[i].getId() == id ) {
+                alkiot[i] = pvm;
+                muutettu = true;
+                return;
+            }
+        }
+        lisaa(pvm);
+    }
+
 
     /**
      * Palauttaa viitteen i:teen jäseneen.

@@ -15,11 +15,8 @@ public class Todos implements Iterable<Todo>{
     private boolean muutettu = false;
     private String tiedostonPerusNimi = "";
 
-//    private String                      tiedostonNimi = "";
-
     /** Taulukko todoista */
-    private final Collection<Todo> alkiot        = new ArrayList<Todo>();
-
+    private final List<Todo> alkiot = new ArrayList<Todo>();
 
     /**
      * Todon alustaminen
@@ -28,7 +25,6 @@ public class Todos implements Iterable<Todo>{
         // toistaiseksi ei tarvitse tehdä mitään
     }
 
-
     /**
      * Lisää uuden todon tietorakenteeseen.  Ottaa todon omistukseensa.
      * @param task lisättävä todo.  Huom tietorakenne muuttuu omistajaksi
@@ -36,6 +32,46 @@ public class Todos implements Iterable<Todo>{
     public void lisaa(Todo task) {
         alkiot.add(task);
         muutettu = true;
+    }
+
+    /**
+     * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.
+     * Etsitään samalla tunnusnumerolla oleva harrastus.  Jos ei löydy,
+     * niin lisätään uutena harrastuksena.
+     * @param todo lisättävän harrastuksen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @throws SailoException jos tietorakenne on jo täynnä
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException,CloneNotSupportedException
+     * #PACKAGEIMPORT
+     * Harrastukset harrastukset = new Harrastukset();
+     * Harrastus har1 = new Harrastus(), har2 = new Harrastus();
+     * har1.rekisteroi(); har2.rekisteroi();
+     * harrastukset.getLkm() === 0;
+     * harrastukset.korvaaTaiLisaa(har1); harrastukset.getLkm() === 1;
+     * harrastukset.korvaaTaiLisaa(har2); harrastukset.getLkm() === 2;
+     * Harrastus har3 = har1.clone();
+     * har3.aseta(2,"kkk");
+     * Iterator<Harrastus> i2=harrastukset.iterator();
+     * i2.next() === har1;
+     * harrastukset.korvaaTaiLisaa(har3); harrastukset.getLkm() === 2;
+     * i2=harrastukset.iterator();
+     * Harrastus h = i2.next();
+     * h === har3;
+     * h == har3 === true;
+     * h == har1 === false;
+     * </pre>
+     */
+    public void korvaaTaiLisaa(Todo todo) throws SailoException {
+        int id = todo.getId();
+        for (int i = 0; i < getLkm(); i++) {
+            if (alkiot.get(i).getId() == id) {
+                alkiot.set(i, todo);
+                muutettu = true;
+                return;
+            }
+        }
+        lisaa(todo);
     }
 
     /**
@@ -112,7 +148,7 @@ public class Todos implements Iterable<Todo>{
 
 
     /**
-     * Tallentaa harrastukset tiedostoon.
+     * Tallentaa todot tiedostoon.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
@@ -296,9 +332,7 @@ public class Todos implements Iterable<Todo>{
             System.out.print(har.getDate() + " ");
             har.tulosta(System.out);
         }
-
     }
-
 }
 
 

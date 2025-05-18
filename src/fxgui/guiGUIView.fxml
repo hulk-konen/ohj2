@@ -59,14 +59,24 @@
             </Label>
          </top>
          <center>
-            <StringGrid editable="true" rivit="Date|Todo|Done&#10;2023-01-01|tiskit|0&#10;2024-01-01|ruoka|0&#10;2025-01-01|ostokset|1" BorderPane.alignment="CENTER" />
+            <StringGrid fx:id="stringGridTodos" editable="false" BorderPane.alignment="CENTER" />
          </center>
+         <bottom>
+            <VBox alignment="CENTER" spacing="10.0">
+               <Button fx:id="editTodoButton" onAction="#handleEditTodo" text="Edit Todo" />
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </BorderPane>
    </right>
-
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
@@ -75,7 +85,7 @@
 
          </children>
          <children>
-            <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna"></Button>
+            <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
          </children>
          <BorderPane.margin>
             <Insets top="11.0" />

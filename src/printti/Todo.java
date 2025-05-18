@@ -1,6 +1,8 @@
 package printti;
 import fi.jyu.mit.ohj2.Mjonot;
 
+import printti.Tietue;
+
 import java.io.*;
 import java.util.Random;
 
@@ -10,7 +12,9 @@ import java.util.Random;
  * @author tohulkko
  * @version 1.0, 11.04.2025
  */
-public class Todo {
+
+public class Todo implements Cloneable, Tietue {
+
     private int id;
     private int date;
     private String task;
@@ -63,6 +67,10 @@ public class Todo {
     private void setId(int nr) {
         id = nr;
         if ( id >= seuraavaNro ) seuraavaNro = id + 1;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
     }
 
     /**
@@ -129,6 +137,36 @@ public class Todo {
         return date;
     }
 
+
+    @Override
+    public int getKenttia() {
+        return 0;
+    }
+
+    @Override
+    public int ekaKentta() {
+        return 0;
+    }
+
+    @Override
+    public String getKysymys(int k) {
+        return "";
+    }
+
+    @Override
+    public String anna(int k) {
+        return "";
+    }
+
+    @Override
+    public String aseta(int k, String s) {
+        return "";
+    }
+
+    @Override
+    public Todo clone() throws CloneNotSupportedException {
+        return (Todo) super.clone();
+    }
 
     /**
      * Palauttaa todon tiedot merkkijonona jonka voi tallentaa tiedostoon.

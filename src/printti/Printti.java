@@ -110,6 +110,37 @@ public class Printti {
     }
 
     /**
+     * Korvaa jäsenen tietorakenteessa.  Ottaa jäsenen omistukseensa.
+     * Etsitään samalla tunnusnumerolla oleva jäsen.  Jos ei löydy,
+     * niin lisätään uutena jäsenenä.
+     * @param jasen lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @throws SailoException jos tietorakenne on jo täynnä
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     *  alustaKerho();
+     *  kerho.etsi("*",0).size() === 2;
+     *  kerho.korvaaTaiLisaa(aku1);
+     *  kerho.etsi("*",0).size() === 2;
+     * </pre>
+     */
+    public void korvaaTaiLisaa(Pvm pvm) throws SailoException {
+        dates.korvaaTaiLisaa(pvm);
+    }
+
+
+    /**
+     * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.
+     * Etsitään samalla tunnusnumerolla oleva harrastus.  Jos ei löydy,
+     * niin lisätään uutena harrastuksena.
+     * @param harrastus lisärtävän harrastuksen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @throws SailoException jos tietorakenne on jo täynnä
+     */
+    public void korvaaTaiLisaa(Todo todo) throws SailoException {
+        todos.korvaaTaiLisaa(todo);
+    }
+
+    /**
      * Palauttaa "taulukossa" hakuehtoon vastaavien jäsenten viitteet
      * @param hakuehto hakuehto
      * @param k etsittävän kentän indeksi
@@ -119,17 +150,6 @@ public class Printti {
     public Collection<Pvm> etsi(String hakuehto, int k) throws SailoException {
         return dates.etsi(hakuehto, k);
     }
-
-    /**
-     * Lukee printin tiedot tiedostosta
-     * @param pvm jota käyteään lukemisessa
-     * @throws SailoException jos lukeminen epäonnistuu
-     */
-//    public void lueTiedostosta(String pvm) throws SailoException {
-//        dates.lueTiedostosta(pvm);
-//        todos.lueTiedostosta(pvm);
-//    }
-
 
     /**
      * Asettaa tiedostojen perusnimet
@@ -286,8 +306,6 @@ public class Printti {
             int i = 0;
             for (Pvm pvm: dates) {
 
-//                for (int i = 0; i < printti.getDates(); i++) {
-//                Pvm pvm = printti.annaPvm(i);
                 System.out.println("Pvm paikassa: " + i);
                 pvm.tulosta(System.out);
                 List<Todo> loytyneet = printti.annaTodot(pvm);

@@ -8,12 +8,14 @@ package printti;
  */
 import fi.jyu.mit.ohj2.Mjonot;
 
+import printti.Tietue;
+
 import java.io.*;
 import java.util.Random;
 import java.time.LocalDate;
 
 
-public class Pvm {
+public class Pvm implements Cloneable, Tietue {
     private int        id;
     private String     pvm = "";
     private static int seuraavaNro    = 1;
@@ -94,6 +96,36 @@ public class Pvm {
         StringBuffer sb = new StringBuffer(rivi);
         setId(Mjonot.erota(sb, '|', getId()));
         pvm = Mjonot.erota(sb, '|', pvm);
+    }
+
+    @Override
+    public int getKenttia() {
+        return 0;
+    }
+
+    @Override
+    public int ekaKentta() {
+        return 0;
+    }
+
+    @Override
+    public String getKysymys(int k) {
+        return "";
+    }
+
+    @Override
+    public String anna(int k) {
+        return "";
+    }
+
+    @Override
+    public String aseta(int k, String s) {
+        return "";
+    }
+
+    @Override
+    public Pvm clone() throws CloneNotSupportedException {
+        return (Pvm) super.clone();
     }
 
     @Override
