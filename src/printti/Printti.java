@@ -113,7 +113,7 @@ public class Printti {
      * Korvaa jäsenen tietorakenteessa.  Ottaa jäsenen omistukseensa.
      * Etsitään samalla tunnusnumerolla oleva jäsen.  Jos ei löydy,
      * niin lisätään uutena jäsenenä.
-     * @param jasen lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @param pvm lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      * @example
      * <pre name="test">
@@ -133,7 +133,7 @@ public class Printti {
      * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.
      * Etsitään samalla tunnusnumerolla oleva harrastus.  Jos ei löydy,
      * niin lisätään uutena harrastuksena.
-     * @param harrastus lisärtävän harrastuksen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @param todo lisärtävän harrastuksen viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      */
     public void korvaaTaiLisaa(Todo todo) throws SailoException {

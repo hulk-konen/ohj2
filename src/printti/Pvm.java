@@ -11,6 +11,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 import printti.Tietue;
 
 import java.io.*;
+import java.util.Comparator;
 import java.util.Random;
 import java.time.LocalDate;
 
@@ -174,6 +175,24 @@ public class Pvm implements Cloneable, Tietue {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * vertailija joka järjestää vanhimmasta uusimpaan
+     */
+    public static class Vertailija implements Comparator<Pvm> {
+
+        /**
+         * vertailee päivien arvot toisiinsa
+         * @param pvm1 eka pvm
+         * @param pvm2 toka pm
+         * @return nega jos vanhempi, positiivnen jos pvm1 on uudempi, 0 jos sama (ei voi tosin olla)
+         */
+        @Override
+        public int compare(Pvm pvm1, Pvm pvm2) {
+            // Compare dates directly as strings (assuming YYYY-MM-DD format)
+            return pvm1.getPvm().compareTo(pvm2.getPvm());
+        }
     }
 
     public static void main(String args[]) {

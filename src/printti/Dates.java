@@ -1,7 +1,6 @@
 package printti;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,8 +9,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 
 /**
@@ -65,19 +62,17 @@ public class Dates implements Iterable<Pvm> {
      * </pre>
      */
     public void lisaa(Pvm pvm) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20);
         alkiot[lkm] = pvm;
         lkm++;
         muutettu = true;
-        // uusi taulukko jos täynnä 2x isompi, kopioi vanha, aseta uusi taulukko vanhan taulukon tilalle
-        // tai valmis metodi ehkä java util
     }
 
     /**
      * Korvaa jäsenen tietorakenteessa.  Ottaa jäsenen omistukseensa.
      * Etsitään samalla tunnusnumerolla oleva jäsen.  Jos ei löydy,
      * niin lisätään uutena jäsenenä.
-     * @param jasen lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * @param pvm lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      * <pre name="test">
      * #THROWS SailoException,CloneNotSupportedException
@@ -356,12 +351,28 @@ public class Dates implements Iterable<Pvm> {
      * i.hasNext() === false;
      * </pre>
      */
+//    @SuppressWarnings("unused")
+//    public Collection<Pvm> etsi(String hakuehto, int k) {
+//        Collection<Pvm> loytyneet = new ArrayList<Pvm>();
+//        for (Pvm pvm : this) {
+//            loytyneet.add(pvm);
+//        }
+//        return loytyneet;
+//    }
+
+    /**
+     * Palauttaa taulukossa hakuehtoon vastaavien päivämäärien viitteet järjestettynä
+     * @param hakuehto hakuehto
+     * @param k etsittävän kentän indeksi
+     * @return löytyntty päivämäärät
+     */
     @SuppressWarnings("unused")
     public Collection<Pvm> etsi(String hakuehto, int k) {
         Collection<Pvm> loytyneet = new ArrayList<Pvm>();
         for (Pvm pvm : this) {
             loytyneet.add(pvm);
         }
+        ((ArrayList<Pvm>) loytyneet).sort(new Pvm.Vertailija());
         return loytyneet;
     }
 

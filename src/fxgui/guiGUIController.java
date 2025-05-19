@@ -17,11 +17,10 @@
     import java.io.IOException;
     import java.net.URL;
     import java.time.LocalDate;
+    import java.util.ArrayList;
     import java.util.List;
     import java.util.ResourceBundle;
     import java.util.stream.Collectors;
-
-    import static fxgui.TietueDialogController.getFieldId;
 
 
     /**
@@ -159,7 +158,9 @@
             }
         }
 
-
+        /**
+         * näyttää valitun päivän tekemättömät todot
+         */
         @FXML
         private void handleHaeTekemattomat() {
             if (printti == null) {
@@ -167,10 +168,9 @@
                 return;
             }
 
-            // Get all undone Todos for the selected date
             List<Todo> undoneTodos = printti.annaTodot(pvmKohdalla).stream()
-                    .filter(todo -> todo.getStatus() == 0) // Status 0 means undone
-                    .sorted((t1, t2) -> t1.getTask().compareToIgnoreCase(t2.getTask())) // Sort by task name
+                    .filter(todo -> todo.getStatus() == 0)
+                    .sorted((t1, t2) -> t1.getTask().compareToIgnoreCase(t2.getTask()))
                     .collect(Collectors.toList());
             if (undoneTodos.isEmpty()) {
                 Dialogs.showMessageDialog("Nice, no undone things!");
@@ -178,16 +178,12 @@
             }
 
                 try {
-
-                // Load the dialog
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("undoneTodosView.fxml")); // Ensure this path is correct
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("undoneTodosView.fxml"));
                 Parent root = loader.load();
 
-                // Set the undone Todos in the dialog controller
                 undoneTodosController controller = loader.getController();
                 controller.setUndoneTodos(undoneTodos);
 
-                // Show the dialog
                 Stage dialogStage = new Stage();
                 dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.setTitle("Undone Todos");
@@ -198,6 +194,13 @@
                 Dialogs.showMessageDialog("Error opening dialog: " + e.getMessage());
             }
         }
+
+
+
+    //===========================================================================================
+    // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
+
+
         /**
          * tarkastaa onko pvm olemassa
          * @param pvmStr pvm string
@@ -235,6 +238,7 @@
             return pvm;
         }
 
+
         /**
          * tarkistaa yyyy-mm-dd formaatin
          * @param pvmStr validoitava
@@ -249,8 +253,6 @@
             }
         }
 
-    //===========================================================================================
-    // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
 
         /**
          * Tekee tarvittavat alustukset
@@ -283,11 +285,29 @@
         /**
          * Hakee päivämäärät listaan
          */
+//        protected void haePvm() {
+//            chooserDates.clear();
+//
+//            for (int i = 0; i < printti.getDates(); i++) {
+//                Pvm pvm = printti.annaPvm(i);
+//                chooserDates.add(pvm.getPvm(), pvm);
+//            }
+//        }
+
+        /**
+         * Hakee päivämäärät listaan järjestettynä vanhimmasta uusimpaan
+         */
         protected void haePvm() {
             chooserDates.clear();
 
+            List<Pvm> sortedDates = new ArrayList<>();
             for (int i = 0; i < printti.getDates(); i++) {
-                Pvm pvm = printti.annaPvm(i);
+                sortedDates.add(printti.annaPvm(i));
+            }
+
+            sortedDates.sort(new Pvm.Vertailija());
+
+            for (Pvm pvm : sortedDates) {
                 chooserDates.add(pvm.getPvm(), pvm);
             }
         }
@@ -296,37 +316,38 @@
          * Hakee päivämäärien tiedot listaan ja asettaa annetun ID:n aktiiviseksi.
          * @param id päivämäärän ID, joka aktivoidaan haun jälkeen
          */
-        protected void hae(int id) {
-            chooserDates.clear();
-
-            int index = 0;
-            boolean found = false;
-
-            try {
-                for (int i = 0; i < printti.getDates(); i++) {
-                    Pvm pvm = printti.annaPvm(i);
-
-                    chooserDates.add(pvm.getPvm(), pvm);
-
-                    if (pvm.getId() == id) {
-                        index = i;
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    Dialogs.showMessageDialog("Date with ID " + id + " not found!");
-                }
-
-                chooserDates.setSelectedIndex(index);
-                naytaPvm();
-
-            } catch (Exception ex) {
-                Dialogs.showMessageDialog("Error fetching dates! " + ex.getMessage());
-            }
-        }
+//        protected void hae(int id) {
+//            chooserDates.clear();
+//
+//            int index = 0;
+//            boolean found = false;
+//
+//            try {
+//                for (int i = 0; i < printti.getDates(); i++) {
+//                    Pvm pvm = printti.annaPvm(i);
+//
+//                    chooserDates.add(pvm.getPvm(), pvm);
+//
+//                    if (pvm.getId() == id) {
+//                        index = i;
+//                        found = true;
+//                    }
+//                }
+//
+//                if (!found) {
+//                    Dialogs.showMessageDialog("Date with ID " + id + " not found!");
+//                }
+//
+//                chooserDates.setSelectedIndex(index);
+//                naytaPvm();
+//
+//            } catch (Exception ex) {
+//                Dialogs.showMessageDialog("Error fetching dates! " + ex.getMessage());
+//            }
+//        }
 
         /**
+         * laittaa printiksi printin
          * @param printti Printti jota käytetään tässä käyttöliittymässä
          */
         public void setPrintti(Printti printti) {
@@ -421,19 +442,19 @@
             }
         }
 
-        private void muokkaa(int k) {
-            if ( pvmKohdalla == null ) return;
-            try {
-                Pvm jasen;
-                jasen = TietueDialogController.kysyTietue(null, pvmKohdalla.clone(), k);
-                if ( jasen == null ) return;
-                printti.korvaaTaiLisaa(jasen);
-                hae(jasen.getId());
-            } catch (CloneNotSupportedException e) {
-                //
-            } catch (SailoException e) {
-                Dialogs.showMessageDialog(e.getMessage());
-            }
-        }
+//        private void muokkaa(int k) {
+//            if ( pvmKohdalla == null ) return;
+//            try {
+//                Pvm jasen;
+//                jasen = TietueDialogController.kysyTietue(null, pvmKohdalla.clone(), k);
+//                if ( jasen == null ) return;
+//                printti.korvaaTaiLisaa(jasen);
+//                hae(jasen.getId());
+//            } catch (CloneNotSupportedException e) {
+//                //
+//            } catch (SailoException e) {
+//                Dialogs.showMessageDialog(e.getMessage());
+//            }
+//        }
 
     }
