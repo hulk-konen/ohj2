@@ -35,32 +35,12 @@ public class Todos implements Iterable<Todo>{
     }
 
     /**
-     * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.
-     * Etsitään samalla tunnusnumerolla oleva harrastus.  Jos ei löydy,
-     * niin lisätään uutena harrastuksena.
-     * @param todo lisättävän harrastuksen viite.  Huom tietorakenne muuttuu omistajaksi
+     * Korvaa todon tietorakenteessa.  Ottaa todon omistukseensa.
+     * Etsitään samalla id:lla oleva todo.  Jos ei löydy,
+     * niin lisätään uutena todona.
+     * @param todo lisättävän todon viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      * @example
-     * <pre name="test">
-     * #THROWS SailoException,CloneNotSupportedException
-     * #PACKAGEIMPORT
-     * Harrastukset harrastukset = new Harrastukset();
-     * Harrastus har1 = new Harrastus(), har2 = new Harrastus();
-     * har1.rekisteroi(); har2.rekisteroi();
-     * harrastukset.getLkm() === 0;
-     * harrastukset.korvaaTaiLisaa(har1); harrastukset.getLkm() === 1;
-     * harrastukset.korvaaTaiLisaa(har2); harrastukset.getLkm() === 2;
-     * Harrastus har3 = har1.clone();
-     * har3.aseta(2,"kkk");
-     * Iterator<Harrastus> i2=harrastukset.iterator();
-     * i2.next() === har1;
-     * harrastukset.korvaaTaiLisaa(har3); harrastukset.getLkm() === 2;
-     * i2=harrastukset.iterator();
-     * Harrastus h = i2.next();
-     * h === har3;
-     * h == har3 === true;
-     * h == har1 === false;
-     * </pre>
      */
     public void korvaaTaiLisaa(Todo todo) throws SailoException {
         int id = todo.getId();
@@ -80,40 +60,6 @@ public class Todos implements Iterable<Todo>{
      * @throws SailoException jos lukeminen epäonnistuu
      *
      * @example
-     * <pre name="test">
-     * #THROWS SailoException
-     * #import java.io.File;
-     *  Harrastukset harrasteet = new Harrastukset();
-     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(2);
-     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(1);
-     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(2);
-     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(1);
-     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(2);
-     *  String tiedNimi = "testikelmit";
-     *  File ftied = new File(tiedNimi+".dat");
-     *  ftied.delete();
-     *  harrasteet.lueTiedostosta(tiedNimi); #THROWS SailoException
-     *  harrasteet.lisaa(pitsi21);
-     *  harrasteet.lisaa(pitsi11);
-     *  harrasteet.lisaa(pitsi22);
-     *  harrasteet.lisaa(pitsi12);
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna();
-     *  harrasteet = new Harrastukset();
-     *  harrasteet.lueTiedostosta(tiedNimi);
-     *  Iterator<Harrastus> i = harrasteet.iterator();
-     *  i.next().toString() === pitsi21.toString();
-     *  i.next().toString() === pitsi11.toString();
-     *  i.next().toString() === pitsi22.toString();
-     *  i.next().toString() === pitsi12.toString();
-     *  i.next().toString() === pitsi23.toString();
-     *  i.hasNext() === false;
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna();
-     *  ftied.delete() === true;
-     *  File fbak = new File(tiedNimi+".bak");
-     *  fbak.delete() === true;
-     * </pre>
      */
     public void lueTiedostosta(String tied) throws SailoException {
         setTiedostonPerusNimi(tied);
@@ -144,8 +90,6 @@ public class Todos implements Iterable<Todo>{
     public void lueTiedostosta() throws SailoException {
         lueTiedostosta(getTiedostonPerusNimi());
     }
-
-
 
     /**
      * Tallentaa todot tiedostoon.
@@ -259,7 +203,6 @@ public class Todos implements Iterable<Todo>{
         return alkiot.iterator();
     }
 
-
     /**
      * Haetaan kaikki päivän todot
      * @param date päivän id jolle todoita haetaan
@@ -297,6 +240,22 @@ public class Todos implements Iterable<Todo>{
             }
         }
         return loydetyt;
+    }
+
+    /**
+     * Poistaa  todon
+     * @param todo poistettava todo
+     * @return true jos poisto onnistui, false jos todoa ei löytynyt
+     */
+    public boolean poista(Todo todo) {
+        for (int i = 0; i < alkiot.size(); i++) {
+            if (alkiot.get(i).getId() == todo.getId()) {
+                alkiot.remove(i);
+                muutettu = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -8,8 +8,6 @@ package printti;
  */
 import fi.jyu.mit.ohj2.Mjonot;
 
-import printti.Tietue;
-
 import java.io.*;
 import java.util.Comparator;
 import java.util.Random;
@@ -100,31 +98,6 @@ public class Pvm implements Cloneable, Tietue {
     }
 
     @Override
-    public int getKenttia() {
-        return 0;
-    }
-
-    @Override
-    public int ekaKentta() {
-        return 0;
-    }
-
-    @Override
-    public String getKysymys(int k) {
-        return "";
-    }
-
-    @Override
-    public String anna(int k) {
-        return "";
-    }
-
-    @Override
-    public String aseta(int k, String s) {
-        return "";
-    }
-
-    @Override
     public Pvm clone() throws CloneNotSupportedException {
         return (Pvm) super.clone();
     }
@@ -190,7 +163,6 @@ public class Pvm implements Cloneable, Tietue {
          */
         @Override
         public int compare(Pvm pvm1, Pvm pvm2) {
-            // Compare dates directly as strings (assuming YYYY-MM-DD format)
             return pvm1.getPvm().compareTo(pvm2.getPvm());
         }
     }

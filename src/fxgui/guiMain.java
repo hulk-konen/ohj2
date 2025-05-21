@@ -10,7 +10,7 @@ import printti.Printti;
 
 /**
  * @author tommi
- * @version tyo3
+ * @version tyo7
  */
 public class guiMain extends Application {
     @Override

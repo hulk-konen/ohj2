@@ -68,12 +68,12 @@ public class Printti {
     }
 
     /**
-     * Poistaa dates ja todos ne joilla on nro. Kesken.
-     * @param nro viitenumero, jonka mukaan poistetaan
-     * @return montako datea poistettiin
+     * Poistaa todon
+     * @param todo poistettava todotehtävä
+     * @return true jos poisto onnistui, false jos todoa ei löytynyt
      */
-    public int poista(@SuppressWarnings("unused") int nro) {
-        return 0;
+    public boolean poistaTodo(Todo todo) {
+        return todos.poista(todo);
     }
 
     /**
@@ -116,18 +116,10 @@ public class Printti {
      * @param pvm lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
      * @example
-     * <pre name="test">
-     * #THROWS SailoException
-     *  alustaKerho();
-     *  kerho.etsi("*",0).size() === 2;
-     *  kerho.korvaaTaiLisaa(aku1);
-     *  kerho.etsi("*",0).size() === 2;
-     * </pre>
      */
     public void korvaaTaiLisaa(Pvm pvm) throws SailoException {
         dates.korvaaTaiLisaa(pvm);
     }
-
 
     /**
      * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.

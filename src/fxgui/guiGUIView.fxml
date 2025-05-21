@@ -64,6 +64,7 @@
          <bottom>
             <VBox alignment="CENTER" spacing="10.0">
                <Button fx:id="editTodoButton" onAction="#handleEditTodo" text="Edit Todo" />
+               <Button fx:id="deleteTodoButton" onAction="#handleDeleteTodo" text="Delete chosen todo" />
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -87,7 +88,8 @@
             <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
          </children>
          <children>
-            <Button fx:id="haeTekemattomatButton" text="Hae päivän tekemättömät" onAction="#handleHaeTekemattomat" />
+            <Button fx:id="haeTekemattomatButton" onAction="#handleHaeTekemattomat" text="Hae päivän tekemättömät" />
+            <Button fx:id="tulosta" onAction="#handleTulosta" text="Tulosta" />
          </children>
          <BorderPane.margin>
             <Insets top="11.0" />

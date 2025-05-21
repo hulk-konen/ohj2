@@ -1,8 +1,6 @@
 package printti;
 import fi.jyu.mit.ohj2.Mjonot;
 
-import printti.Tietue;
-
 import java.io.*;
 import java.util.Random;
 
@@ -29,7 +27,6 @@ public class Todo implements Cloneable, Tietue {
       //  rekisteroi();
         // Vielä ei tarvita mitään
     }
-
 
     /**
      * Alustetaan tietyn päivän todo.
@@ -119,7 +116,6 @@ public class Todo implements Cloneable, Tietue {
         return id;
     }
 
-
     /**
      * Palautetaan todon oma id
      * @return todon id
@@ -128,39 +124,12 @@ public class Todo implements Cloneable, Tietue {
         return id;
     }
 
-
     /**
      * Palautetaan mille datelle todo kuuluu
      * @return päivän id
      */
     public int getDate() {
         return date;
-    }
-
-
-    @Override
-    public int getKenttia() {
-        return 0;
-    }
-
-    @Override
-    public int ekaKentta() {
-        return 0;
-    }
-
-    @Override
-    public String getKysymys(int k) {
-        return "";
-    }
-
-    @Override
-    public String anna(int k) {
-        return "";
-    }
-
-    @Override
-    public String aseta(int k, String s) {
-        return "";
     }
 
     @Override
@@ -182,7 +151,6 @@ public class Todo implements Cloneable, Tietue {
     public String toString() {
         return "" + getId() + "|" + date + "|" + task + "|" + status;
     }
-
 
     /**
      * Selvitää todon tiedot | erotellusta merkkijonosta.

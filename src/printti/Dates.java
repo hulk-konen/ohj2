@@ -69,31 +69,11 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Korvaa jäsenen tietorakenteessa.  Ottaa jäsenen omistukseensa.
-     * Etsitään samalla tunnusnumerolla oleva jäsen.  Jos ei löydy,
-     * niin lisätään uutena jäsenenä.
-     * @param pvm lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
+     * Korvaa päivän tietorakenteessa.  Ottaa päivän omistukseensa.
+     * Etsitään samalla tunnusnumerolla oleva päivä.  Jos ei löydy,
+     * niin lisätään uutena päivänä.
+     * @param pvm lisätäävän päivän viite.  Huom tietorakenne muuttuu omistajaksi
      * @throws SailoException jos tietorakenne on jo täynnä
-     * <pre name="test">
-     * #THROWS SailoException,CloneNotSupportedException
-     * #PACKAGEIMPORT
-     * Jasenet jasenet = new Jasenet();
-     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
-     * aku1.rekisteroi(); aku2.rekisteroi();
-     * jasenet.getLkm() === 0;
-     * jasenet.korvaaTaiLisaa(aku1); jasenet.getLkm() === 1;
-     * jasenet.korvaaTaiLisaa(aku2); jasenet.getLkm() === 2;
-     * Jasen aku3 = aku1.clone();
-     * aku3.aseta(3,"kkk");
-     * Iterator<Jasen> it = jasenet.iterator();
-     * it.next() == aku1 === true;
-     * jasenet.korvaaTaiLisaa(aku3); jasenet.getLkm() === 2;
-     * it = jasenet.iterator();
-     * Jasen j0 = it.next();
-     * j0 === aku3;
-     * j0 == aku3 === true;
-     * j0 == aku1 === false;
-     * </pre>
      */
     public void korvaaTaiLisaa(Pvm pvm) throws SailoException {
         int id = pvm.getId();
@@ -109,9 +89,9 @@ public class Dates implements Iterable<Pvm> {
 
 
     /**
-     * Palauttaa viitteen i:teen jäseneen.
+     * Palauttaa viitteen i:teen päivään.
      * @param i monennenko jäsenen viite halutaan
-     * @return viite jäseneen, jonka indeksi on i
+     * @return viite päivään, jonka indeksi on i
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella
      */
     public Pvm anna(int i) throws IndexOutOfBoundsException {
@@ -297,70 +277,6 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Palauttaa "taulukossa" hakuehtoon vastaavien päivämäärien viitteet.
-     * @param hakuehto hakuehto
-     * @param k etsittävän kentän indeksi
-     * @return tietorakenteen löytyneistä päivämääristä
-     * @example
-     * <pre name="test">
-     * #THROWS SailoException
-     * Dates dates = new Dates();
-     * Pvm pvm1 = new Pvm();
-     * pvm1.parse("1|2025-04-23");
-     *
-     * Pvm pvm2 = new Pvm();
-     * pvm2.parse("2|2025-04-24");
-     *
-     * Pvm pvm3 = new Pvm();
-     * pvm3.parse("3|2025-04-25");
-     *
-     * Pvm pvm4 = new Pvm();
-     * pvm4.parse("4|2025-04-26");
-     *
-     * try {
-     *     dates.lisaa(pvm1);
-     * } catch (SailoException e) {
-     *     fail("SailoException adding pvm1: " + e.getMessage());
-     * }
-     *
-     * try {
-     *     dates.lisaa(pvm2);
-     * } catch (SailoException e) {
-     *     fail("SailoException adding pvm2: " + e.getMessage());
-     * }
-     *
-     * try {
-     *     dates.lisaa(pvm3);
-     * } catch (SailoException e) {
-     *     fail("SailoException adding pvm3: " + e.getMessage());
-     * }
-     *
-     * try {
-     *     dates.lisaa(pvm4);
-     * } catch (SailoException e) {
-     *     fail("SailoException adding pvm4: " + e.getMessage());
-     * }
-     *
-     * Collection<Pvm> loytyneet = dates.etsi("", -1);
-     * loytyneet.size() === 4;
-     * Iterator<Pvm> i = loytyneet.iterator();
-     * i.next().toString() === pvm1.toString();
-     * i.next().toString() === pvm2.toString();
-     * i.next().toString() === pvm3.toString();
-     * i.next().toString() === pvm4.toString();
-     * i.hasNext() === false;
-     * </pre>
-     */
-//    @SuppressWarnings("unused")
-//    public Collection<Pvm> etsi(String hakuehto, int k) {
-//        Collection<Pvm> loytyneet = new ArrayList<Pvm>();
-//        for (Pvm pvm : this) {
-//            loytyneet.add(pvm);
-//        }
-//        return loytyneet;
-//    }
-
-    /**
      * Palauttaa taulukossa hakuehtoon vastaavien päivämäärien viitteet järjestettynä
      * @param hakuehto hakuehto
      * @param k etsittävän kentän indeksi
@@ -441,9 +357,9 @@ public class Dates implements Iterable<Pvm> {
 
 
         /**
-         * Onko olemassa vielä seuraavaa jäsentä
+         * Onko olemassa vielä seuraavaa päivänä
          * @see java.util.Iterator#hasNext()
-         * @return true jos on vielä jäseniä
+         * @return true jos on vielä päiviä
          */
         @Override
         public boolean hasNext() {
@@ -452,8 +368,8 @@ public class Dates implements Iterable<Pvm> {
 
 
         /**
-         * Annetaan seuraava jäsen
-         * @return seuraava jäsen
+         * Annetaan seuraava päivä
+         * @return seuraava päivä
          * @throws NoSuchElementException jos seuraava alkiota ei enää ole
          * @see java.util.Iterator#next()
          */
@@ -476,7 +392,7 @@ public class Dates implements Iterable<Pvm> {
     }
 
     /**
-     * Palautetaan iteraattori jäsenistään.
+     * Palautetaan iteraattori päivistään.
      * @return jäsen iteraattori
      */
     @Override
